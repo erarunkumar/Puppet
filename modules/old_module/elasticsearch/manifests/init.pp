@@ -1,6 +1,4 @@
-class elasticsearch {
-        Exec {
-                path => [
+class elasticsearch ($version = "0.90.12",){
                         '/usr/local/bin',
                         '/opt/local/bin',
                         '/usr/bin',
@@ -11,7 +9,7 @@ class elasticsearch {
         }
        exec { "install_elasticsearch":
         cwd      =>  "/opt",
-       command   => "wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.12.deb;dpkg -i elasticsearch-0.90.12.deb",
+       command   => "wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$version.deb;dpkg -i elasticsearch-$version.deb",
        logoutput => true,
        timeout   => 1800,
         }
