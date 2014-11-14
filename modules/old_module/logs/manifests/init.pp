@@ -16,34 +16,11 @@ class logs{
        timeout   => 1800,
         }
 
-         file {"/etc/conf.d/input_syslog.conf":
-        ensure => ['directory', 'present'],
-        source => "/etc/puppet/modules/logs/manifests/input_syslog.conf",
-        owner  => 'root',
-        group  => 'root',
-        mode   => '640',
-       }
-
-         file {"/etc/conf.d/output_elasticsearch.conf":
-        ensure => ['directory', 'present'],
-        source => "/etc/puppet/modules/logs/manifests/output_elasticsearch.conf",
-        owner  => 'root',
-        group  => 'root',
-        mode   => '640',
-       }
-         file {"/etc/conf.d/output_stdout.conf":
-        ensure => ['directory', 'present'],
-        source => "/etc/puppet/modules/logs/manifests/output_stdout.conf",
-        owner  => 'root',
-        group  => 'root',
-        mode   => '640',
-       }
          file {"/etc/init/logstash_server.conf":
         ensure => ['directory', 'present'],
         source => "/etc/puppet/modules/logs/manifests/logstash_server.conf",
         owner  => 'root',
         group  => 'root',
         mode   => '640',
-       }
 }
 
