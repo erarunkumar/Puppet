@@ -1,0 +1,29 @@
+{
+  "checksums": {
+    "files/logstash_init_RedHat": "c4c46931ca8f116e405bad9cfb9eea4b",
+    "files/logstash_init_Debian": "f174e32145b549ae20a65d58cef074aa",
+    "manifests/service.pp": "a0ae935701cec71eadfc849106f07f00",
+    "README.txt": "0f7453c4b7635f014cf6ffb268be059c",
+    "files/conf.d/logstash_base.conf": "73f6f172862d5f5ad9a7b73b40bd5c5d",
+    "manifests/install.pp": "9c40b541f8f041467eae69f37d0bc3e9",
+    "files/logstash_rotate": "b1e30c29862e87cacccc8ab37a4a43bd",
+    "manifests/conf.pp": "86c29dd064c81dbf0888f2ce035a5fd6",
+    "files/logstashd": "e1630f708ccfe1b3c3ec52d5bb32c271",
+    "manifests/init.pp": "0f152a54af5538db26da55d31b09cf5d",
+    "Modulefile": "08e6a357a7b5daeb403a764f4c54756a"
+  },
+  "description": "This module installs and manages logstash software and configuration.\nThrough declaration, you can configure directors and configuration files.\nIt's usable on Debian 5/6 & Redhat 4/5/6 systems.",
+  "summary": "UNKNOWN",
+  "source": "UNKNOWN",
+  "author": "nelmo - cedrik MALLET",
+  "types": [
+
+  ],
+  "license": "Apache License, Version 2.0",
+  "dependencies": [
+
+  ],
+  "name": "Nelmo-logstash",
+  "version": "1.0.0",
+  "project_page": "https://github.com/nelmos/puppet.git"
+}
