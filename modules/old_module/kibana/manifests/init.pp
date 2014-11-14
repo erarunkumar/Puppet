@@ -1,4 +1,4 @@
-class kibana {
+class kibana ($version = "3.1.0",) {
         Exec {
                 path => [
                         '/usr/local/bin',
@@ -8,10 +8,10 @@ class kibana {
                         '/bin',
                         '/sbin'],
                         logoutput => true,
-        }
+        }version
        exec { "install_kibana":
         cwd      =>  "/opt",
-       command   => "wget https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz;tar xvfz kibana-3.1.0.tar.gz",
+       command   => "wget https://download.elasticsearch.org/kibana/kibana/kibana-$version.tar.gz;tar xvfz kibana-$version.tar.gz",
        logoutput => true,
        timeout   => 1800,
         }
