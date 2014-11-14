@@ -18,7 +18,7 @@ class logs($version = "1.4.2",){
 
          file {"/etc/init/logstash_server.conf":
         ensure => ['directory', 'present'],
-        source => "puppet:///modules/file/logstash_server.conf",
+        source => "puppet:///modules/logs/file/logstash_server.conf",
         owner  => 'root',
         group  => 'root',
         mode   => '640',
