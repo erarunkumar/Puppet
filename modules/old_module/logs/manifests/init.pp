@@ -1,4 +1,4 @@
-class logs{
+class logs($version = "1.4.2",){
         Exec {
                 path => [
                         '/usr/local/bin',
@@ -6,12 +6,12 @@ class logs{
                         '/usr/bin',
                         '/usr/sbin',
                         '/bin',
-                        '/sbin'],
+                        '/sbin'],$version
                         logoutput => true,
         }
        exec { "install_logstash":
-        cwd      =>  "/opt",
-       command   => "wget https://download.elasticsearch.org/logstash/logstash/logstash-1.4.2.tar.gz;tar zxvf logstash-1.4.2.tar.gz;mv logstash-1.4.2 server",
+        cwd      =>  "/opt"
+       command   => "wget https://download.elasticsearch.org/logstash/logstash/logstash-$version.tar.gz;tar zxvf logstash-$version.tar.gz;mv logstash-1.4.2 server",
        logoutput => true,
        timeout   => 1800,
         }
