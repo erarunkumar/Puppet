@@ -1,9 +1,11 @@
-name 'Nelmo-logstash'
-version '1.0.0'
-description "This module installs and manages logstash software and configuration.
-Through declaration, you can configure directors and configuration files.
-It's usable on Debian 5/6 & Redhat 4/5/6 systems."
-project_page 'https://github.com/nelmos/puppet.git'
-author 'nelmo - cedrik MALLET'
+name    'puppet-logstash'
+version '0.98.14'
+source 'Github'
+author 'Kris Buytaert'
+license 'GPL'
+summary 'This module manages Logstash'
+description ''
+project_page 'https://github.com/KrisBuytaert/vagrant-puppet-logstash'
 
-
+## Add dependencies, if any:
+# dependency 'username/name', '>= 1.2.0'
