@@ -38,3 +38,9 @@ mongodb_user { testuser:
   require       => Class['mongodb::server'],
 }
 
+# Install MongoDB from 10gen repository
+class {'::mongodb::globals':
+  manage_package_repo => true,
+}->
+class {'::mongodb::server': }->
+class {'::mongodb::client': }
