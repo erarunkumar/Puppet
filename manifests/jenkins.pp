@@ -5,8 +5,11 @@ puppet module install rtyler-jenkins
 #Install jenkins
 include jenkins
 
-#Install jenkins 
+#Install jenkins plugin
 jenkins::plugin {
-  "git" :
-    version => "1.1.11";
+  "git" : 
+  version => "1.1.11";
 }
+
+
+
