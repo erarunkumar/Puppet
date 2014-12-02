@@ -24,17 +24,10 @@ class { 'logstash':
   ensure => 'absent'
 }
 
-# add init file
-class { 'logstash':
-  init_defaults_file => '/etc/defaults/logstash'
-  }
   
   #Contrib package installation
   class { 'logstash':
   install_contrib => true
 }
 
-#Java Install
-class { 'logstash':
-  java_install => true
-}
+
