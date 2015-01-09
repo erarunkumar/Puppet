@@ -2,10 +2,6 @@ class snoopy (
     $logger     = "syslog-ng",
     $logfile    = "/var/log/snoopy.log",
     ) {
-	file{ ["/etc/syslog-ng","/etc/syslog-ng/conf.d"]:
-	    ensure => directory,
-	    mode => "0755"
-	}
 	package { "syslog-ng":
             ensure => 'present'
         }
