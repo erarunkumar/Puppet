@@ -1,6 +1,8 @@
 
-#Use this command to install jenkins
+#Use this command to install jenkins  puppet module
 puppet module install rtyler-jenkins
+
+#Manifest file
 
 Exec {
      path => [
