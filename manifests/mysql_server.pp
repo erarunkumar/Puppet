@@ -8,14 +8,13 @@ puppet module install puppetlabs-mysql
 class { '::mysql::server':
   root_password    => 'pass',
   override_options => $override_options
-}
-
 #Create database
-databases =>
+       databases =>
        {'alok' => {
     ensure  => 'present',
     charset => 'utf8',
   },
+}
 }
 
 #Creates a database with a user and assigns some privileges
