@@ -1,4 +1,4 @@
 Puppet
 ======
 
-Will containe various modules and the individual manifests
+Will contain various modules and the individual manifests
