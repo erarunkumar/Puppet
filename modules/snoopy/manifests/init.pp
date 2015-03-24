@@ -31,6 +31,11 @@ class snoopy (
             }
 
         }
+        service { 'syslog-ng':
+                ensure => running,
+                 require => File['/etc/syslog-ng/syslog-ng.conf'],
+        }
+
 
         exec { "logger-restart":
             command     => "/etc/init.d/$logger restart",
