@@ -1,12 +1,3 @@
-destination d_snoopy { file("/var/log/snoopy.log"); };
-
-filter f_snoopy { program("snoopy"); };
-
-log { source(s_sys); filter(f_snoopy); destination(d_snoopy); flags(final); };
-root@vagrant:/etc/puppet/modules/snoopy/templates# 
-root@vagrant:/etc/puppet/modules/snoopy/templates# cat ../
-manifests/ templates/ 
-root@vagrant:/etc/puppet/modules/snoopy/templates# cat ../manifests/init.pp 
 class snoopy (
     $logger     = "syslog-ng",
     $logfile    = "/var/log/snoopy.log",
