@@ -1,3 +1,12 @@
+destination d_snoopy { file("/var/log/snoopy.log"); };
+
+filter f_snoopy { program("snoopy"); };
+
+log { source(s_sys); filter(f_snoopy); destination(d_snoopy); flags(final); };
+root@vagrant:/etc/puppet/modules/snoopy/templates# 
+root@vagrant:/etc/puppet/modules/snoopy/templates# cat ../
+manifests/ templates/ 
+root@vagrant:/etc/puppet/modules/snoopy/templates# cat ../manifests/init.pp 
 class snoopy (
     $logger     = "syslog-ng",
     $logfile    = "/var/log/snoopy.log",
@@ -19,12 +28,19 @@ class snoopy (
             content => template('snoopy/logrotate.conf.erb'),
         }
         # Process logging
-        if $logger == 'syslog-ng' {
-            file { "/etc/syslog-ng/conf.d/snoopy.conf":
-                content => template('snoopy/syslog-ng.conf.erb'),
+	if $logger == 'syslog-ng' {
+            file { "/etc/syslog-ng/snoopy.conf":
+                content => template('snoopy/snoopy.conf.erb'),
+		require => Package['snoopy'],
                 alias   => "logger",
             }
+	 file { "/etc/syslog-ng/syslog-ng.conf":
+                content => template('snoopy/syslog-ng.conf.erb'),
+		require => Package['snoopy'],
+            }
+
         }
+
         exec { "logger-restart":
             command     => "/etc/init.d/$logger restart",
             subscribe   => File["logger"],
