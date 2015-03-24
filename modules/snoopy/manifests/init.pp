@@ -25,18 +25,17 @@ class snoopy (
 		require => Package['snoopy'],
                 alias   => "logger",
             }
-	 file { "/etc/syslog-ng/syslog-ng.conf":
-                content => template('snoopy/syslog-ng.conf.erb'),
-		require => Package['snoopy'],
+	 file_line { "/etc/syslog-ng/syslog-ng.conf":
+                ensure => present,
+                line => '@include "snoopy.conf"',
+                path   => '/etc/syslog-ng/syslog-ng.conf',
+                require => File['/etc/syslog-ng/snoopy.conf'],
             }
-
         }
         service { 'syslog-ng':
                 ensure => running,
                  require => File['/etc/syslog-ng/syslog-ng.conf'],
         }
-
-
         exec { "logger-restart":
             command     => "/etc/init.d/$logger restart",
             subscribe   => File["logger"],
