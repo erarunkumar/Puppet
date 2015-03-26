@@ -1,5 +1,5 @@
 class snoopy::install () {
-	package { ["syslog-ng", "snoopy"]:
+	package { ["snoopy"]:
             ensure => 'present'
         }
 }
