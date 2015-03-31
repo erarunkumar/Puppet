@@ -1,4 +1,4 @@
-class manage-selinux ($selinuxState="Permissive") {
+class selinux::manage ($selinuxState="Permissive") {
 
 	case $selinuxState {
 	        'Permissive': {
@@ -21,7 +21,7 @@ class manage-selinux ($selinuxState="Permissive") {
 	file { 'selinux-config':
 		path => '/etc/selinux/config',
 		ensure => file,
-		content => template("manage-selinux/selinux_config.erb"), 
+		content => template("selinux/selinux_config.erb"), 
 	}	
 
 }
