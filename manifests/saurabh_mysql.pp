@@ -1,5 +1,7 @@
-#run this command to install puppet mysql module
 
+#use puppetlabs-mysql module from puppet forge
+
+#run this command to install puppet mysql module
 puppet module install puppetlabs-mysql
 
 
