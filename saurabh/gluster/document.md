@@ -1,3 +1,4 @@
+# create a file filename.pp in puppet/manifest and use below blocks as per your requirement.
 # Use gluster class for installing glusterfs-server.
 
 
