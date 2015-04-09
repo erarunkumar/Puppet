@@ -1,5 +1,5 @@
-# create a file filename.pp in puppet/manifest and use below blocks as per your requirement.
-# Use gluster class for installing glusterfs-server.
+## create a file filename.pp in puppet/manifest and use below blocks as per your requirement.
+#### Use gluster class for installing glusterfs-server.
 
 
    class { 'gluster':}
@@ -7,7 +7,7 @@
 
 #####################################################################################################
 
-# Use peers class to add peears.
+#### Use peers class to add peears.
 
    class {"gluster::peers":
            peers => [],
@@ -15,7 +15,7 @@
 
 ######################################################################################################
 
-# Use volume class to create a volume.
+#### Use volume class to create a volume.
 
 
    $brick_list = [
@@ -31,7 +31,7 @@
 
 #######################################################################################################
 
-# Use client class to setup a client
+#### Use client class to setup a client
 
 
 class {"gluster::client":
