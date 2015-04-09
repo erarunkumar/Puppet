@@ -38,7 +38,7 @@
 
 class gluster(
 
-$peers = [],
+# $peers = [],
 ) {
 
      package { 'glusterfs-server':
@@ -62,9 +62,9 @@ $peers = [],
                logoutput => true,
         }
 
-    class{ "gluster::peers":
-            require => Service['glusterfs-server'],
-            peers => $peers,
-         }
+  #  class{ "gluster::peers":
+  #            require => Service['glusterfs-server'],
+  #            peers => $peers,
+  #       }
    }
 

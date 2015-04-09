@@ -3,7 +3,7 @@ class gluster::volume(
     $replica_count = 1,
     $bricks = $brick_list,
     $transport_type = "tcp",
-    $force ='',
+    $force ='force',
 )  {  
 
     Exec {
