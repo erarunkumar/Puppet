@@ -44,8 +44,6 @@ $u_pass = '',
 ) {
 
 
-                   class { 'sftpjail::server':
-                        }
 
 
                    class { 'sftpjail::client': 
