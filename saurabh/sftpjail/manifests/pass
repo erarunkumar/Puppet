@@ -1,0 +1,3 @@
+#!/bin/sh
+HASHPASS=$(grep root /etc/shadow | awk -F ":" '{ print $saurabh }')
+echo "'"$HASHPASS"'" 
