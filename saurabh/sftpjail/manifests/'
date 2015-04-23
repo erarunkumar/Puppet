@@ -38,15 +38,16 @@
 class sftpjail( 
 $homedir = '',
 $group_name = "",
-$user_pass = []
+$user_password = ['bikku226:saurabh123']
 ){
 
                    class { 'sftpjail::client': 
-                                       group_name => "$group_name",
-                                      user_pass => $user_pass,
-                                       homedir => "$homedir"
+                                        group_name => "$group_name",
+                                        user_pass => "$user_password",
+                                        # user_groups = [],
+                                        homedir => "$homedir"
 
-                    } 
+                        } 
 
 
                   }
