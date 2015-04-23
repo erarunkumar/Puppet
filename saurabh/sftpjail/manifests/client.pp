@@ -7,6 +7,7 @@ $homedir = ''
 ){
 
                  include stdlib
+                 include sftpjail::service
 
                  Exec {
                         path => [
@@ -40,22 +41,8 @@ $homedir = ''
         ChrootDirectory /sftp/%u
         ForceCommand internal-sftp",
                       require => File_line['internal_sftp'],
-                     notify  => Service["ssh"]
+                     notify  => Class['sftpjail::service']
                     }
-
-
-
-
-
-
-
-                 service { "ssh":
-                            ensure  => "running",
-                            enable  => "true",
-                            require => Package["openssh-server"],
-                         }
-
-
 
 
 
