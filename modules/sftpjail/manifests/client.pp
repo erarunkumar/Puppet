@@ -30,26 +30,22 @@ $homedir = ''
                       match => "Subsystem sftp /usr/lib/openssh/sftp-server",
                        require => Package['openssh-server']
                      }
- 
-                 file_line {"match_group":
-                       path => "/etc/ssh/sshd_config",
-                       ensure => present,
-                       line => "Match Group $group_name
-        ChrootDirectory /sftp/%u
-        ForceCommand internal-sftp",
-                       match => "Match Group $group_name
-        ChrootDirectory /sftp/%u
-        ForceCommand internal-sftp",
-                      require => File_line['internal_sftp'],
-                     notify  => Class['sftpjail::service']
-                    }
 
+                exec{"groupname":
+                       command => "echo 'Match Group $group_name
+        ChrootDirectory /sftp/%u
+        ForceCommand internal-sftp' >> /etc/ssh/sshd_config",
+                       unless => "grep $group_name /etc/ssh/sshd_config",
+                       require => File_line['internal_sftp'],
+                       notify  => Class['sftpjail::service']
+                    }
+ 
 
 
                 class{"sftpjail::user":
-                                   homedir => "$homedir",
-                                   group_name => "$group_name",
-                                   user_pass => $user_pass
+                       homedir => "$homedir",
+                       group_name => "$group_name",
+                       user_pass => $user_pass
                     }
 
 }
