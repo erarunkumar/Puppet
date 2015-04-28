@@ -34,5 +34,26 @@ package { $package:
     require => Exec["apt-get_update"]
 }
 
+exec{"dashing": 
+command => "sudo gem install dashing --verbose",
+require => Package[$package]
+}
+
+exec{"dashing_project":
+command => 'dashing new "/sau_dashboard_project"',
+require => Exec["dashing"]
+}
+
+exec{"bundle_project":
+cwd => "/sau_dashboard_project",
+command => "bundle",
+require => Exec["dashing_project"]
+}
+
+exec{"dashing_start":
+cwd => "/sau_dashboard_project",
+command => "dashing start",
+require => Exec["bundle_project"]
+}
 
 }
