@@ -1,6 +1,6 @@
 #################################################################################
 # puppet module install --force ispavailability-file_concat --version 0.0.2
-# puppet module install puppetlabs-apt --version 1.8.0
+# puppet module install puppetlabs-apt --force --version 1.8.0
 # puppet module install elasticsearch-elasticsearch
 # puppet module install elasticsearch-logstash
 # puppet module install echocat-kibana4
