@@ -75,4 +75,4 @@ incron:
       user_mask: 'IN_CREATE'
       user_allow: 'ubuntu'
 ```
-** user_allow and user_deny are optional you can user it**
+** user_allow and user_deny are optional you can user it to manage users**
