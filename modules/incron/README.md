@@ -59,7 +59,23 @@ To pass the parameters from the hiera user include this line in your site.pp fil
 include incron::hiera_limits
 ```
 
-
+Hiera Example:
+--------------
+```
+incron:
+  'test1':
+      user_name: 'wleese'
+      user_command: 'touch /tmp/1'
+      user_path: '/home/wleese/'
+      user_mask: 'IN_CREATE'
+  'test2':
+      user_name: 'ubuntu'
+      user_command: 'touch /home/ubuntu/home.txt'
+      user_path: '/home/ubuntu'
+      user_mask: 'IN_CREATE'
+      user_allow: 'ubuntu'
+```
+** user_allow and user_deny are optional you can user it**
 Support
 -------
 
