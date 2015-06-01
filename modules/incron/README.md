@@ -52,6 +52,11 @@ Valid values for the mask parameter are:
     IN_ALL_EVENT
     IN_NO_LOOP
 
+To use it with Hiera
+--------------------
+To pass the parameters from the hiera user include this line in your site.pp file
+**include incron::hiera_limits
+
 Support
 -------
 
