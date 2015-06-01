@@ -55,7 +55,10 @@ Valid values for the mask parameter are:
 To use it with Hiera
 --------------------
 To pass the parameters from the hiera user include this line in your site.pp file
-**include incron::hiera_limits
+```
+include incron::hiera_limits
+```
+
 
 Support
 -------
