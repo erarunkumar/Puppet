@@ -76,9 +76,3 @@ incron:
       user_allow: 'ubuntu'
 ```
 ** user_allow and user_deny are optional you can user it**
-Support
--------
-
-If you recieve the error "Error: Could not find a suitable provider for incron", please install the incron package or add 'include incron' to your puppet code.
-
-Feel free to suggest improvements!
