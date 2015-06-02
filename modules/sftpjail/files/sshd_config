@@ -134,6 +134,7 @@ Subsystem       sftp    internal-sftp
 # Example of overriding settings on a per-user basis
 Match Group sftpusers
         ChrootDirectory /sftp/%u
+	AuthorizedKeysFile /etc/ssh-pool/%u.pub
 	ForceCommand internal-sftp
 	
 #Match User anoncvs
