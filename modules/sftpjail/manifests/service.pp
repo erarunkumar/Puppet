@@ -1,9 +1,8 @@
-class sftpjail::service{
-
-  service { "ssh":
-    ensure  => "running",
-    enable  => "true",
-    require => Package["openssh-server"],
-  }
+class sftpjail::service() {
+	service { "sshd":
+		ensure  => "running",
+		enable  => "true",
+		require => Package["openssh-server"],
+	}
 
 }
