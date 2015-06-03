@@ -24,4 +24,7 @@ It ensures the running state of "ssh" service.
 ###### *[user.pp](https://github.com/OpsTree/Puppet/blob/sandeep/modules/sftpjail/manifests/user.pp)*
 
 This file manage sftpusers. It creates users and define their home directory on the basis of a variable udt i.e. user defined type. This variable diffrentiate between the users by their authentication method i.e key based or password based authentication and also add those users to a default "sftpusers" group.
-   
+
+
+##### *[example.pp] (https://github.com/OpsTree/Puppet/blob/sandeep/modules/sftpjail/example/example.pp)*
+This is an example file to setup basic sftpjail configuration with two users, one with password based and another with key based authentication.   
