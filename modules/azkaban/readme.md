@@ -2,7 +2,7 @@
 
 **Azkaban** is a open source workflow manager and  job scheduler created at LinkedIn. Azkaban resolves the ordering through job dependencies and provides an easy to use web user interface to maintain and track your workflows.
 
-To setup azkabaan in two-server mode with basic configuration use example.pp from test folder.
+To setup azkabaan in two-server mode with basic configuration use example.pp from tests folder.
 
 ###### This module containes following files 
 
