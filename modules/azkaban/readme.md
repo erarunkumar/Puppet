@@ -1,15 +1,8 @@
 ##### This is a puppet module to setup "azkaban" in two-server mode
 
-######## **This module needs to setup a keystore for ssl as dependency.**
-Go to azkaban official [documentation](http://azkaban.github.io/azkaban/docs/2.5/) to get KeyStore for SSL or you can follow these commands.
+**Azkaban** is a open source workflow manager and  job scheduler created at LinkedIn. Azkaban resolves the ordering through job dependencies and provides an easy to use web user interface to maintain and track your workflows.
 
-*keytool -keystore keystore -alias jetty -genkey -keyalg RSA*
-
-*keytool -certreq -alias jetty -keystore keystore -file jetty.csr*
-
-And place that keystore and jetty.csr file in /opt directory. 
-
-
+To setup azkabaan in two-server mode with basic configuration use example.pp from test folder.
 
 ###### This module containes following files 
 
@@ -20,6 +13,10 @@ This file conatins initial calls to setup basic configuration of azkaban in two-
 ###### *[mysqluser.pp](https://github.com/OpsTree/Puppet/blob/saurabh/modules/azkaban/manifests/mysqluser.pp)*
 
 This file setup basic database requirement for azkaban.
+
+###### *[jetty.pp](https://github.com/OpsTree/Puppet/blob/saurabh/modules/azkaban/manifests/jetty.pp)*
+
+This file creates a ssl keystore (keystore) and corresponding jetty certificate (jetty.csr) for that and place them in "/opt" directory.
 
 ###### *[webserver.pp](https://github.com/OpsTree/Puppet/blob/saurabh/modules/azkaban/manifests/webserver.pp)*
 
