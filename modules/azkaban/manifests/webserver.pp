@@ -15,7 +15,7 @@ Exec {
 	exec{"webserver":
 		command =>'wget -P /opt/azkaban/webserver/ https://s3.amazonaws.com/azkaban2/azkaban2/2.5.0/azkaban-web-server-2.5.0.tar.gz',
 		creates => '/opt/azkaban/webserver/azkaban-web-server-2.5.0.tar.gz',
-		require => [Class['java'],Class['azkaban']],
+		require => [Class['java'],Class['azkaban'],Class['azkaban::mysqluser'],Class['azkaban::jetty']],
 	}
 
 	exec{"tarwebserver":
@@ -49,7 +49,8 @@ Exec {
 
 	exec{"runwebserver":
 		command => "bash -c 'bin/azkaban-web-start.sh'",
-		cwd     =>  "/opt/azkaban/webserver/azkaban-web-2.5.0/",
+		cwd     => "/opt/azkaban/webserver/azkaban-web-2.5.0/",
+		unless  => "netstat -plannet | grep 8443",
 		require => [File['/opt/azkaban/webserver/azkaban-web-2.5.0/keystore'],File['/opt/azkaban/webserver/azkaban-web-2.5.0/jetty']],
 	}
 

@@ -12,11 +12,11 @@ Exec {
   }
 
 	include java
-
+        include stdlib
 	exec{"executorserver":
 		command =>'wget -P /opt/azkaban/executorserver/ https://s3.amazonaws.com/azkaban2/azkaban2/2.5.0/azkaban-executor-server-2.5.0.tar.gz',
 		creates => '/opt/azkaban/executorserver/azkaban-executor-server-2.5.0.tar.gz',
-		require => [Class['java'],Class['azkaban']],
+		require => [Class['java'],Class['azkaban'],Class['azkaban::mysqluser']],
 	}
 
 	exec{"tarexecutorserver":
@@ -31,14 +31,23 @@ Exec {
         }
 	
 	file{"/opt/azkaban/executorserver/azkaban-executor-2.5.0/extlib/mysql-connector-java-5.1.35.tar.gz":
-		ensure =>'file',
+		ensure  =>'file',
 		source  =>'/opt/mysql-connector-java-5.1.35.tar.gz',
 		require => [Exec['tarexecutorserver'],Exec['exejavaconnector']],
+	}
+
+	file_line {"databaseconfiguration":
+		path     => "/opt/azkaban/executorserver/azkaban-executor-2.5.0/conf/azkaban.properties",
+		ensure   => present,
+		line     => "mysql.database=azkaban",
+		match    => "mysql.database=azkaban2",
+		require  => Exec['tarexecutorserver'],
 	}
 
 	exec{"runexecutorserver":
 		command => "bash -c 'bin/azkaban-executor-start.sh'",
 		cwd     =>  "/opt/azkaban/executorserver/azkaban-executor-2.5.0",
-		require => Exec['tarexecutorserver'],
+		unless  => "netstat -plannet| grep 12321",
+		require => [Exec['tarexecutorserver'],File_line['databaseconfiguration']],
 	}
 }

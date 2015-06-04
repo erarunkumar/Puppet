@@ -32,7 +32,8 @@ mysql::db { 'azkaban':
   host     => 'localhost',
   sql      => '/opt/azkaban-2.5.0/create-all-sql-2.5.0.sql',
   import_timeout => 900,
-  require       => [Class['mysql::server'],Exec['tarsqlfiles']]
+  require       => [Class['mysql::server'],Exec['tarsqlfiles']],
+before =>  Mysql_user['azkaban@localhost'],
 }
 
 mysql_user{ 'azkaban@localhost':
@@ -45,7 +46,7 @@ mysql_grant{'azkaban@localhost/azkaban.*':
   user       => 'azkaban@localhost',
   table      => 'azkaban.*',
   privileges => ['UPDATE','SELECT','INSERT','DELETE'],
-  require       => Mysql_user['azkaban@localhost'],
+  require    => Mysql_user['azkaban@localhost'],
 }
 
 
