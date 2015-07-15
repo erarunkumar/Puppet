@@ -45,6 +45,42 @@ node "mongo-arb" {
 
 }
 ```
+There is 2 slave(192.168.1.16:27017,192.168.1.17:27017) and one is master(192.168.1.18:27017). 
+
+###To create config server
+```puppet
+class {'::mongodb::globals': manage_package_repo => true, 
+}->
+class {'::mongodb::server': package_name => mongodb-org, 
+        logappend => true,
+        port => 27050,
+        configsvr => true,
+	bind_ip => "0.0.0.0",
+        logpath => "/var/log/mongodb/log.cfg0" 
+}
+}
+```
+###To create Query server
+```Puppet
+node "mongos", "queryserver", "query" {
+class {'::mongodb::globals': manage_package_repo => true, 
+}->
+class {'::mongodb::server': package_name => mongodb-org,
+        port => 27019,
+        bind_ip => "0.0.0.0",
+	#ensure => false,
+}->
+class {'::mongodb::mongos':
+  #ensure => 'true',
+  #service_ensure => 'true',
+  #port => 27019, 
+  configdb => ['192.168.1.14:27050','192.168.1.15:27050','192.168.1.22:27050'],
+  }->
+   mongodb_shard { 'guzool':
+	member => 'guzool/192.168.1.18:27017',
+}
+}
+```
 
 # mongodb puppet module
 
