@@ -1,3 +1,46 @@
+# Mongo Sharding
+###Compoents of the mongo sharding
+1. [Shards- may single instance and replica set]
+2. [Config Server- for keeping the metadata of the Shards]
+3. [Query Server- do the read and write operation on the shards]
+
+## Create a shard
+###To create shards use this manifest file 
+## to create slave nodes of replica set(shards)
+'node "mongo-replica1" {
+	class {'::mongodb::globals': manage_package_repo => true, 
+	}->
+	class {'::mongodb::server': package_name => mongodb-org, 
+		replset => "guzool",
+ 		bind_ip => "192.168.1.16"
+	}
+}
+
+node "mongo-replica2" {
+        class {'::mongodb::globals': manage_package_repo => true,
+        }->
+        class {'::mongodb::server': package_name => mongodb-org,
+                replset => "guzool",
+                bind_ip => "192.168.1.17"
+        }
+}
+'
+## this will create the monog replica primary node
+'node "mongo-arb" {
+	class {'::mongodb::globals': manage_package_repo => true, 
+	}->
+	class {'::mongodb::server': package_name => mongodb-org, 
+        bind_ip => "192.168.1.18",
+	shardsvr => ture,
+	replset => "guzool",
+	}->
+        mongodb_replset { guzool:
+  	ensure  => present,
+  	members => ['192.168.1.18:27017','192.168.1.16:27017', '192.168.1.17:27017']
+	}
+
+}'
+
 # mongodb puppet module
 
 [![Build Status](https://travis-ci.org/puppetlabs/puppetlabs-mongodb.png?branch=master)](https://travis-ci.org/puppetlabs/puppetlabs-mongodb)
