@@ -1,6 +1,7 @@
 ### Description to configure the tomcat through the Puppet module (camptocamp)
 ## Dependency 
 * Java should be installed.
+
 ## Installing tomcat 
 ```
 class { 'tomcat':
