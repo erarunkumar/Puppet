@@ -5,7 +5,7 @@ class mongodb::repo (
   case $::osfamily {
     'RedHat', 'Linux': {
       if $mongodb::globals::use_enterprise_repo == true {
-        $location = 'https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/stable/$basearch/'
+        $location = 'https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.0/x86_64/'
         $description = 'MongoDB Enterprise Repository'
       }
       else {
@@ -23,7 +23,7 @@ class mongodb::repo (
     'Debian': {
       $location = $::operatingsystem ? {
         'Debian' => 'http://downloads-distro.mongodb.org/repo/debian-sysvinit',
-        'Ubuntu' => 'http://downloads-distro.mongodb.org/repo/ubuntu-upstart',
+        'Ubuntu' => 'http://repo.mongodb.org/apt/ubuntu',
         default  => undef
       }
       class { '::mongodb::repo::apt': }

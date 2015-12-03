@@ -112,10 +112,12 @@ class mongodb::params inherits mongodb::globals {
           $server_package_name = pick($::mongodb::globals::server_package_name, 'mongodb-org-server')
           $client_package_name = pick($::mongodb::globals::client_package_name, 'mongodb-org-shell')
           $mongos_package_name = pick($::mongodb::globals::mongos_package_name, 'mongodb-org-mongos')
-          $package_ensure = true
+          $tools_package_name = pick($::mongodb::globals::tools_package_name, 'mongodb-org-tools')
+	  $package_ensure = true
           $package_ensure_client = true
           $package_ensure_mongos = true
-          $service_name = pick($::mongodb::globals::service_name, 'mongod')
+          $package_ensure_tools = true
+	  $service_name = pick($::mongodb::globals::service_name, 'mongod')
           $config = '/etc/mongod.conf'
         } else {
           # check if the version is greater than 2.6
@@ -123,7 +125,8 @@ class mongodb::params inherits mongodb::globals {
             $server_package_name = pick($::mongodb::globals::server_package_name, 'mongodb-org-server')
             $client_package_name = pick($::mongodb::globals::client_package_name, 'mongodb-org-shell')
             $mongos_package_name = pick($::mongodb::globals::mongos_package_name, 'mongodb-org-mongos')
-            $package_ensure = $::mongodb::globals::version
+            $tools_package_name = pick($::mongodb::globals::tools_package_name, 'mongodb-org-tools')
+	    $package_ensure = $::mongodb::globals::version
             $package_ensure_client = $::mongodb::globals::version
             $package_ensure_mongos = $::mongodb::globals::version
             $service_name = pick($::mongodb::globals::service_name, 'mongod')
@@ -132,6 +135,7 @@ class mongodb::params inherits mongodb::globals {
             $server_package_name = pick($::mongodb::globals::server_package_name, 'mongodb-10gen')
             $client_package_name = pick($::mongodb::globals::client_package_name, 'mongodb-10gen')
             $mongos_package_name = pick($::mongodb::globals::mongos_package_name, 'mongodb-10gen')
+            $tools_package_name = pick($::mongodb::globals::tools_package_name, 'mongodb-10gen')
             $package_ensure = $::mongodb::globals::version
             $package_ensure_client = $::mongodb::globals::version #this is still needed in case they are only installing the client
             $service_name = pick($::mongodb::globals::service_name, 'mongodb')

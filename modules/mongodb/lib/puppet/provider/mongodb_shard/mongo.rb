@@ -187,6 +187,12 @@ Puppet::Type.type(:mongodb_shard).provide(:mongo, :parent => Puppet::Provider::M
       myarr.each do |line|
         line.gsub!(/sharding version:/, '{ "sharding version":')
         line.gsub!(/shards:/, ',"shards":[')
+	line.gsub!(/balancer:/, '')
+	line.gsub!(/Currently enabled:  yes/, '')
+	line.gsub!(/Currently running:  no/, '')
+	line.gsub!(/Failed balancer rounds in last 5 attempts:  0/, '')
+	line.gsub!(/Migration Results for the last 24 hours:/, '')
+	line.gsub!(/No recent migrations/, '')
         line.gsub!(/databases:/, '], "databases":[')
         line.gsub!(/"clusterId" : ObjectId\("(.*)"\)/, '"clusterId" : "ObjectId(\'\1\')"')
         line.gsub!(/\{  "_id" :/, ",{  \"_id\" :") if /_id/ =~ prev_line
