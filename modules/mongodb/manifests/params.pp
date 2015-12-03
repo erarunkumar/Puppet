@@ -129,6 +129,7 @@ class mongodb::params inherits mongodb::globals {
 	    $package_ensure = $::mongodb::globals::version
             $package_ensure_client = $::mongodb::globals::version
             $package_ensure_mongos = $::mongodb::globals::version
+            $package_ensure_tools  = $::mongodb::globals::version
             $service_name = pick($::mongodb::globals::service_name, 'mongod')
             $config = '/etc/mongod.conf'
           } else {
