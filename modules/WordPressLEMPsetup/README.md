@@ -7,14 +7,14 @@
 ########################################################################
 php::repo::ubuntu::ppa: 'ondrej/php-7.0'
 
-mysql::server::root_password: 'mypassword'
+mysql::server::root_password: '$$$##@@@$$$'
 
 wordpress::install_dir: '/opt/wordpress'
 wordpress::version: '4.3.1'
 wordpress::wp_owner: 'www-data'
 wordpress::wp_group: 'www-data'
-wordpress::db_user: 'testwordpress'
-wordpress::db_password: 'testwordpress'
+wordpress::db_user: '@dsnk@'
+wordpress::db_password: '@cdnk@'
 
 wordpress_newinstance:
   "site1":
@@ -23,8 +23,8 @@ wordpress_newinstance:
     wp_owner: 'aman'
     wp_group: 'aman'
     db_name: "aman"
-    db_user: 'testwordpress1'
-    db_password: 'testwordpress1'
+    db_user: '@dncjke@'
+    db_password: '@dcjn@'
 
 php::ensure: latest
 php::manage_repos: true
