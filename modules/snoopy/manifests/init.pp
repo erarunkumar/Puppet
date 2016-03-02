@@ -48,7 +48,9 @@ $logfile = $::snoopy::params::logfile,
 $log_path = $::snoopy::params::log_path,
 $datetime = $::snoopy::params::datetime
 )inherits snoopy::params{
+	# Install snoopy
 	class {'snoopy::install':}
+	# Configure snoopy logs
 	class {'snoopy::configure':
 		username => $username,
 		userid => $userid,

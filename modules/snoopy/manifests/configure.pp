@@ -11,6 +11,7 @@ $logfile = undef,
 $log_path = undef,
 $datetime = undef
 ){
+	# Create snoopy configuration file to generate appropriate logs
 	file{'/etc/snoopy.ini':
 		content => template('snoopy/snoopy.ini.erb'),
 		owner => 'root',
