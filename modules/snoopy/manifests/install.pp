@@ -1,14 +1,18 @@
 class snoopy::install(){
-	remote_file { '/tmp/snoopy-install.sh':
-		ensure => present,
-		source => 'https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh',
-		mode => '755',
-	}
+
+	package {'wget':}
 	
+	exec { 'get_snoopy_script':
+		cwd => "/tmp",
+		command => '/usr/bin/wget https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh;chmod 755 /tmp/snoopy-install.sh',
+		creates => '/tmp/snoopy-install.sh',
+		require => Package['wget'],
+	}
+
 	exec {'execute_install_script':
 		cwd => '/tmp',
 		command => '/tmp/snoopy-install.sh stable',
 		creates => '/etc/snoopy.ini',
-		require => Remote_file['/tmp/snoopy-install.sh'],
+		require => Exec['get_snoopy_script'],
 	}
 }
