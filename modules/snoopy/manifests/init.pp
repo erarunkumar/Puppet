@@ -1,39 +1,44 @@
 # == Class: snoopy
 #
-# Full description of class snoopy here.
+# Base class of snoopy module which calls install and configure modules for installation and configuration of snoopy.
 #
 # === Parameters
 #
-# Document parameters here.
+#  [*username*]
+#    If you want to include username in logs. Default: true
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+#  [*userid*]
+#    If you want to include userid in logs. Default: true
 #
-# === Variables
+#  [*groupid*]
+#    If you want to include groupid in logs. Default: false
 #
-# Here you should define a list of variables that this module would require.
+#  [*superid*]
+#    If you want to include superuser id in logs. Default: false
 #
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
+#  [*terminal*]
+#    If you want to include terminal type in logs. Default: true
 #
-# === Examples
+#  [*currect_directory*]
+#    If you want to include the directory from where the command is issued in logs. Default: true
 #
-#  class { snoopy:
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
+#  [*processid*]
+#    If you want to include processid of the command executed in logs. Default: false
 #
-# === Authors
+#  [*filename*]
+#    If you want to include the path of the binary that is called when command is executed in logs. Default: true
 #
-# Author Name <author@domain.com>
+#  [*logfile*]
+#    If you want to change the location of snoopy logs. Default: true
 #
-# === Copyright
+#  [*log_path*]
+#    If logfile is set to true, then set the path of the log file. Default: /var/log/snoopy.log
 #
-# Copyright 2016 Your name here, unless otherwise noted.
+#  [*datetime*]
+#    If you want to include datetime when the command is executed in logs. Default: false
+# === Example
+#
+#   class {'snoopy':}
 #
 class snoopy(
 $username = $::snoopy::params::username,

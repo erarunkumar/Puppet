@@ -1,3 +1,13 @@
+# == Class: snoopy::install
+#
+# Base class of snoopy module which installs snoopy, called from init
+#
+# === Parameters
+#
+# === Example
+#
+#   class {'snoopy::install':}
+#
 class snoopy::install(){
 	# Ensure wget package is installed so that we can get snoopy install script
 	package {'wget':}
