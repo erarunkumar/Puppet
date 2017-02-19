@@ -1,0 +1,11 @@
+java::oracles::java_details:
+  'jre8':
+    ensure: 'present'
+    version: '8'
+    java_se: 'jre'
+zookeeper::hostnames:
+  - zookeeper-master.domain.name
+  - zookeeper-slave1.domain.name
+  - zookeeper-slave2.domain.name
+zookeeper::properties:
+  'zookeeper.security.auth_to_local': '::undef'
