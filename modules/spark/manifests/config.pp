@@ -13,7 +13,7 @@ class spark::config (
     shell      => '/bin/bash',
     managehome => true,
   }
-  archive { $::filename:
+  archive { $filename :
     path          => "/tmp/${filename}",
     source        => 'https://archive.apache.org/dist/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz',
     checksum_type => 'none',
