@@ -29,7 +29,7 @@ aerospike::config_service:
 aerospike::config_net_svc:
   'address': 'any'
   'port': 3000
-  'access-address': 192.168.33.70   
+  'access-address': 192.168.33.70
 aerospike::config_cluster:
   'mode': 'dynamic'
   'self-group-id': 666
@@ -50,3 +50,26 @@ aerospike::config_ns:
       - 'file /opt/aerospike/data/adtech.dat'
       - 'filesize 10G'
       - 'data-in-memory true'
+
+cassandra::datastax_repo::pkg_url: 'http://rpm.datastax.com/datastax-ddc/3.9'
+cassandra::package_ensure: ddc
+cassandra::package_name: datastax
+cassandra::settings:
+  'authenticator': 'PasswordAuthenticator'
+  'cluster_name': 'MyCassandraCluster'
+  'commitlog_directory': '/var/lib/cassandra/commitlog'
+  'commitlog_sync': 'periodic'
+  'commitlog_sync_period_in_ms': 10000
+  'data_file_directories': ['/var/lib/cassandra/data']
+  'endpoint_snitch': 'GossipingPropertyFileSnitch'
+  'listen_address': $::ipaddress
+  'partitioner': 'org.apache.cassandra.dht.Murmur3Partitioner'
+  'saved_caches_directory': '/var/lib/cassandra/saved_caches'
+  'seed_provider':
+    - 'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
+    - 'parameters':
+        'seeds': $::ipaddress
+    - 'start_native_transport': true
+  require:
+    'Class':
+      - cassandra::datastax_repo
