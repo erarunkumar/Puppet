@@ -1,5 +1,6 @@
 # == Class: roles::kafka
 #
 class roles::kafka {
-  include profiles::kafka
+  class { 'profiles::java': }->
+  class { 'profiles::kafka': }
 }

@@ -75,8 +75,10 @@ cassandra::require:
       - cassandra::datastax_repo
 
 ##################### kafka ##############
-kafka::version: '0.9.0.1'
+kafka::version: '0.10.0.1'
 kafka::scala_version: '2.11'
+kafka::install_java: false
 kafka::broker::config:
   'broker.id': '0'
   'zookeeper.connect': 'localhost:2181'
+  'inter.broker.protocol.version': '0.10.0.0'
