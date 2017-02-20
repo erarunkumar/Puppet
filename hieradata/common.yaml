@@ -52,24 +52,24 @@ aerospike::config_ns:
       - 'data-in-memory true'
 
 cassandra::datastax_repo::pkg_url: 'http://rpm.datastax.com/datastax-ddc/3.9'
-cassandra::package_ensure: ddc
-cassandra::package_name: datastax
+cassandra::package_name: datastax-ddc
 cassandra::settings:
   'authenticator': 'PasswordAuthenticator'
   'cluster_name': 'MyCassandraCluster'
   'commitlog_directory': '/var/lib/cassandra/commitlog'
   'commitlog_sync': 'periodic'
   'commitlog_sync_period_in_ms': 10000
-  'data_file_directories': ['/var/lib/cassandra/data']
+  'data_file_directories':
+    '/var/lib/cassandra/data'
   'endpoint_snitch': 'GossipingPropertyFileSnitch'
-  'listen_address': $::ipaddress
+  'listen_address': "%{::ipaddress_eth0}" 
   'partitioner': 'org.apache.cassandra.dht.Murmur3Partitioner'
   'saved_caches_directory': '/var/lib/cassandra/saved_caches'
   'seed_provider':
-    - 'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
-    - 'parameters':
-        'seeds': $::ipaddress
-    - 'start_native_transport': true
-  require:
+    'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
+    'parameters':
+      'seeds': "%{::ipaddress_eth0}"
+    'start_native_transport': true
+cassandra::require:
     'Class':
       - cassandra::datastax_repo
