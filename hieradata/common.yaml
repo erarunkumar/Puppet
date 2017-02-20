@@ -50,7 +50,7 @@ aerospike::config_ns:
       - 'file /opt/aerospike/data/adtech.dat'
       - 'filesize 10G'
       - 'data-in-memory true'
-
+################ cassandra #########################
 cassandra::datastax_repo::pkg_url: 'http://rpm.datastax.com/datastax-ddc/3.9'
 cassandra::package_name: datastax-ddc
 cassandra::settings:
@@ -62,7 +62,7 @@ cassandra::settings:
   'data_file_directories':
     '/var/lib/cassandra/data'
   'endpoint_snitch': 'GossipingPropertyFileSnitch'
-  'listen_address': "%{::ipaddress_eth0}" 
+  'listen_address': "%{::ipaddress_eth0}"
   'partitioner': 'org.apache.cassandra.dht.Murmur3Partitioner'
   'saved_caches_directory': '/var/lib/cassandra/saved_caches'
   'seed_provider':
@@ -73,3 +73,10 @@ cassandra::settings:
 cassandra::require:
     'Class':
       - cassandra::datastax_repo
+
+##################### kafka ##############
+kafka::version: '0.9.0.1'
+kafka::scala_version: '2.11'
+kafka::broker::config:
+  'broker.id': '0'
+  'zookeeper.connect': 'localhost:2181'
