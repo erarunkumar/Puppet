@@ -1,2 +1,7 @@
+# == Class: profiles::base
 #
-include java::oracles
+class profiles::base {
+  include timezone
+  include ntp
+  include selinux
+}

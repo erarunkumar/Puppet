@@ -1,6 +1,12 @@
-public_ntp_servers:
-  - 127
-  - 128
+selinux::mode: 'disabled'
+selinux::type: 'targeted'
+timezone::timezone: 'UTC'
+ulimit::use_default_ulimits: false
+ntp::logfile: /var/log/ntp.log
+ntp::minpoll: 10
+ntp::maxpoll: 3
+ntp::iburst_enable: true
+
 java::oracles::java_details:
   'jre8':
     ensure: 'present'
