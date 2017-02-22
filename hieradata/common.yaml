@@ -1,11 +1,38 @@
 selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
-ulimit::use_default_ulimits: false
+
 ntp::logfile: /var/log/ntp.log
 ntp::minpoll: 10
-ntp::maxpoll: 3
+ntp::maxpoll: 11
 ntp::iburst_enable: true
+ulimit::use_default_ulimits: false
+ulimit::purge: false
+ulimit::rules::limit_config:
+  'nrpoc':
+    ulimit_domain: '*'
+    ulimit_type  : '-'
+    ulimit_item  : 'nproc'
+    ulimit_value : '65536'
+    priority     : '100'
+  'nofile':
+    ulimit_domain: '*'
+    ulimit_type  : '-'
+    ulimit_item  : 'nofile'
+    ulimit_value : '65536'
+    priority     : '90'
+  'core':
+    ulimit_domain: '*'
+    ulimit_type  : '-'
+    ulimit_item  : 'core'
+    ulimit_value : 'unlimited'
+    priority     : '80'
+  'memlock':
+    ulimit_domain: '*'
+    ulimit_type  : '-'
+    ulimit_item  : 'memlock'
+    ulimit_value : 'unlimited'
+    priority     : '80'
 
 java::oracles::java_details:
   'jre8':
@@ -59,23 +86,27 @@ aerospike::config_ns:
 ################ cassandra #########################
 cassandra::datastax_repo::pkg_url: 'http://rpm.datastax.com/datastax-ddc/3.9'
 cassandra::package_name: datastax-ddc
+cassandra::service_ensure: running
+cassandra::dc: 'DC1'
 cassandra::settings:
-  'authenticator': 'PasswordAuthenticator'
   'cluster_name': 'MyCassandraCluster'
+  'authenticator': 'AllowAllAuthenticator'
   'commitlog_directory': '/var/lib/cassandra/commitlog'
   'commitlog_sync': 'periodic'
   'commitlog_sync_period_in_ms': 10000
+  'num_tokens': 256
+  'listen_interface': 'eth1'
   'data_file_directories':
-    '/var/lib/cassandra/data'
+    - '/var/lib/cassandra/data'
   'endpoint_snitch': 'GossipingPropertyFileSnitch'
-  'listen_address': "%{::ipaddress_eth0}"
   'partitioner': 'org.apache.cassandra.dht.Murmur3Partitioner'
   'saved_caches_directory': '/var/lib/cassandra/saved_caches'
+  'hints_directory': /var/lib/cassandra/hints
   'seed_provider':
-    'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
-    'parameters':
-      'seeds': "%{::ipaddress_eth0}"
-    'start_native_transport': true
+    - 'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
+      'parameters':
+        - 'seeds': '192.168.33.50'
+  'start_native_transport': true
 cassandra::require:
     'Class':
       - cassandra::datastax_repo
