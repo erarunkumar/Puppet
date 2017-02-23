@@ -2,6 +2,12 @@ selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
 
+nvm_nodejs::app_name: 'adtech'
+nvm_nodejs::environment: 'production'
+nvm_nodejs::packages:
+  - bower
+  - pm2
+
 ntp::logfile: /var/log/ntp.log
 ntp::minpoll: 10
 ntp::maxpoll: 11
