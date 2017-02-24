@@ -5,29 +5,30 @@
 class spark::config (
   $dirname      = 'spark-2.1.0-bin-hadoop2.7',
   $filename     = "${dirname}.tgz",
-  $install_path = "/home/spark/${dirname}"
+  $install_path = "/opt/${dirname}"
 ){
   user { 'spark':
     ensure     => 'present',
-    home       => '/home/spark',
-    shell      => '/bin/bash',
-    managehome => true,
   }
   archive { $filename :
     path          => "/tmp/${filename}",
     source        => 'https://archive.apache.org/dist/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz',
     checksum_type => 'none',
     extract       => true,
-    extract_path  => '/home/spark',
+    extract_path  => '/opt/',
     creates       => "${install_path}/bin",
     cleanup       => true,
-    user          => 'spark',
-    group         => 'spark',
-    require       => User['spark'],
   }
-  file { '/home/spark/spark':
+  file { '/opt/spark':
     ensure  => link,
-    target  => "/home/spark/${dirname}",
+    target  => "/opt/${dirname}",
     require => Archive[$::filename],
+  }
+
+  file { $install_path:
+    ensure  => directory,
+    owner   => 'spark'
+    group   => 'spark'
+    require => Archive[$filename]
   }
 }
