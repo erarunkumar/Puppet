@@ -1,8 +1,8 @@
 spark::spark_env:
-  - 'SPARK_LOCAL_IP=0.0.0.0'
+  - SPARK_LOCAL_IP=%{::ipaddress_eth1}
+  - SPARK_MASTER_HOST=%{::ipaddress_eth1}
   - 'SPARK_DAEMON_MEMORY=500m'
-#spark::slave:
-#  - 'slave-spark'  
+spark::master_url: '192.168.33.50'
 selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
