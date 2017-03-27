@@ -12,10 +12,10 @@ aerospike::config_service:
   'proto-fd-max': 15000
   'paxos-protocol': 'v4'
   'paxos-recovery-policy': 'auto-reset-master'
-aerospike::config_net_svc:
-  'address': 'any'
-  'port': 3000
-  'access-address': adtech-aerospike-master.internal.adtech.com
+#aerospike::config_net_svc:
+#  'address': 'any'
+#  'port': 3000
+#  'access-address': adtech-aerospike-master.internal.adtech.com
 #aerospike::config_cluster:
 #  'mode': 'dynamic'
 #  'self-group-id': 666
