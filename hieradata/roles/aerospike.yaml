@@ -1,0 +1,38 @@
+---
+################## aerospike ###############
+aerospike::version: 3.11.1.1
+aerospike::download_user: 'myuser'
+aerospike::download_pass: 'mypassword'
+aerospike::config_service:
+  'paxos-single-replica-limit': 1
+  'pidfile': '/var/run/aerospike/asd.pid'
+  'service-threads': 4
+  'transaction-queues': 4
+  'transaction-threads-per-queue': 4
+  'proto-fd-max': 15000
+  'paxos-protocol': 'v4'
+  'paxos-recovery-policy': 'auto-reset-master'
+aerospike::config_net_svc:
+  'address': 'any'
+  'port': 3000
+  'access-address': adtech-aerospike-master.internal.adtech.com
+aerospike::config_cluster:
+  'mode': 'dynamic'
+  'self-group-id': 666
+aerospike::config_net_hb:
+  'mode': 'mesh'
+  'port': 3002,
+  'interval': 150
+  'timeout': 10
+  'mesh-seed-address-port adtech-aerospike-master.internal.adtech.com': 3002
+#  'mesh-seed-address-port 192.168.33.60': 3002
+#  'mesh-seed-address-port 192.168.33.70': 3002
+aerospike::config_ns:
+  'adtech':
+    'replication-factor': 2
+    'memory-size': '500M'
+    'default-ttl': '5d'
+    'storage-engine device':
+      - 'file /opt/aerospike/data/adtech.dat'
+      - 'filesize 10G'
+      - 'data-in-memory true'
