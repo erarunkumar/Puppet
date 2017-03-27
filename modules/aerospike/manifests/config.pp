@@ -13,6 +13,13 @@ class aerospike::config {
     group   => $aerospike::system_group,
   }
 
+  file { '/var/log/aerospike':
+    ensure => directory,
+    mode   => '0755',
+    owner  => $aerospike::system_user,
+    group  => $aerospike::system_group,
+  }
+
   # If 'aerospike::config_xdr_credentials' defined - create file(s) with credentials for XDR
   if ! empty($aerospike::config_xdr_credentials) {
     $xdr_rdcs = keys($aerospike::config_xdr_credentials)
