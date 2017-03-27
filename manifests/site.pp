@@ -42,8 +42,9 @@ node 'slave-spark' {
   }
 }
 
-#
-# note: first we have to generate the sshkeys, setup slave and spark master
-# go to the spark master and switch to the spark user and run spark/sbin/start-all.sh
-# it will start whole cluster
-#
+node 'adtech-aerospike-master' {
+  include roles::aerospike
+}
+node 'adtech-aerospike-slave' {
+  include roles::aerospike
+}
