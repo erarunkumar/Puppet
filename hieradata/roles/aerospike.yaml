@@ -16,23 +16,20 @@ aerospike::config_net_svc:
   'address': 'any'
   'port': 3000
   'access-address': adtech-aerospike-master.internal.adtech.com
-aerospike::config_cluster:
-  'mode': 'dynamic'
-  'self-group-id': 666
-aerospike::config_net_hb:
-  'mode': 'mesh'
-  'port': 3002,
-  'interval': 150
-  'timeout': 10
-  'mesh-seed-address-port adtech-aerospike-master.internal.adtech.com': 3002
+#aerospike::config_cluster:
+#  'mode': 'dynamic'
+#  'self-group-id': 666
+#aerospike::config_net_hb:
+#  'mode': 'mesh'
+#  'port': 3002,
+#  'interval': 150
+#  'timeout': 10
+#  'mesh-seed-address-port adtech-aerospike-master.internal.adtech.com': 3002
 #  'mesh-seed-address-port 192.168.33.60': 3002
 #  'mesh-seed-address-port 192.168.33.70': 3002
 aerospike::config_ns:
-  'adtech':
+  'mobiadz':
     'replication-factor': 2
-    'memory-size': '500M'
-    'default-ttl': '5d'
-    'storage-engine device':
-      - 'file /opt/aerospike/data/adtech.dat'
-      - 'filesize 10G'
-      - 'data-in-memory true'
+    'memory-size': '4G'
+    'default-ttl': '60d'
+    'storage-engine memory': ''
