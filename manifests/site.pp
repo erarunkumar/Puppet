@@ -15,5 +15,5 @@ node /^adtech-aerospike-\w+\.internal$/ {
 }
 
 node /^adtech-frontend-\w+\.internal$/ {
-  include roles::aerospike
+  include roles::nodejs
 }
