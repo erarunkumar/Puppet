@@ -18,6 +18,6 @@ node /^adtech-frontend-\w+\.internal$/ {
   include roles::nodejs
 }
 
-node /^adtech-spark-\w+\.internal$/ {
+node /^adtech-zookeeper-\w+\.internal$/ {
   include roles::zookeeper
 }
