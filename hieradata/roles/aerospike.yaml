@@ -5,6 +5,7 @@ aerospike::download_user: 'myuser'
 aerospike::download_pass: 'mypassword'
 aerospike::amc_install: true
 aerospike::amc_version: 3.6.13
+aerospike::amc_download_url: 'http://www.aerospike.com/artifacts/aerospike-amc-community/3.6.13/aerospike-amc-community-3.6.13-el6.x86_64.rpm'
 aerospike::amc_manage_service: true
 aerospike::config_service:
   'paxos-single-replica-limit': 1
@@ -13,13 +14,6 @@ aerospike::config_service:
   'transaction-queues': 4
   'transaction-threads-per-queue': 4
   'proto-fd-max': 15000
-#aerospike::config_net_svc:
-#  'address': 'any'
-#  'port': 3000
-#  'access-address': adtech-aerospike-master.internal.adtech.com
-#aerospike::config_cluster:
-#  'mode': 'dynamic'
-#  'self-group-id': 666
 aerospike::config_net_hb:
   'mode': 'mesh'
   'port': 3002,
