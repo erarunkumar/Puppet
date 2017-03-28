@@ -42,6 +42,9 @@ node 'slave-spark' {
   }
 }
 
+node /^adtech-spark-\w+\.internal$/ {
+  include roles::spark
+}
 node 'adtech-aerospike-master' {
   include roles::aerospike
 }
