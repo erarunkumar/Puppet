@@ -35,14 +35,14 @@ class spark::config (
     require => Archive[$filename]
   }
 
-  if $spark_env != undef {
-    file { "/opt/${dirname}/conf/spark-env.sh":
-      content => template('spark/spark-env.sh.erb'),
-      mode    => '0755',
-      owner   => 'spark',
-      group   => 'spark',
-    }
+  file { "/opt/${dirname}/conf/spark-env.sh":
+    content => template('spark/spark-env.sh.erb'),
+    mode    => '0755',
+    owner   => 'spark',
+    group   => 'spark',
+    notify  => Service[$servive_name],
   }
+
   if $spark_master_url != undef {
     $servive_name  = 'spark_slave'
     $start_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-slave.sh spark://${spark_master_url}:7077'"
