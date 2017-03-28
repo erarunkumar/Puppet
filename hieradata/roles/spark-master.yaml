@@ -1,4 +1,4 @@
 spark::spark_env:
-  - SPARK_LOCAL_IP = %{::ipaddress_eth1}
-  - SPARK_MASTER_HOST = %{::ipaddress_eth1}
+  - SPARK_LOCAL_IP = %{::ipaddress_eth0}
+  - SPARK_MASTER_HOST = %{::ipaddress_eth0}
   - 'SPARK_DAEMON_MEMORY=1500m'
