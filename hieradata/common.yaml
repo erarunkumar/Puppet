@@ -42,11 +42,11 @@ java::oracles::java_details:
     java_se: 'jre'
 
 ################# Nodejs ################
-nvm_nodejs::app_name: 'adtech'
+nvm_nodejs::app_name: 'mobiadz'
 nvm_nodejs::environment: 'production'
 nvm_nodejs::packages:
   - bower
-  - gulp
+  - gulp-cli
 
 zookeeper::hostnames:
   - zookeeper-master.domain.name
