@@ -68,8 +68,9 @@ class spark::config (
   }
 
   service { $servive_name:
-    ensure  => 'running',
-    enable  => true,
-    require => File['initd', $install_path],
+    ensure   => 'running',
+    enable   => true,
+    provider => 'redhat',
+    require  => File['initd', $install_path],
   }
 }
