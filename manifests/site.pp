@@ -21,3 +21,7 @@ node /^adtech-frontend-\w+\.internal$/ {
 node /^adtech-spark-\w+\.internal$/ {
   include roles::zookeeper
 }
+
+node /^adtech-backend-\w+\.internal$/ {
+  include roles::java
+}
