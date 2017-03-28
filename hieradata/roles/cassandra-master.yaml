@@ -10,7 +10,7 @@ cassandra::settings:
   'commitlog_sync': 'periodic'
   'commitlog_sync_period_in_ms': 10000
   'num_tokens': 256
-  'listen_interface': 'eth1'
+  'listen_interface': 'eth0'
   'data_file_directories':
     - '/var/lib/cassandra/data'
   'endpoint_snitch': 'GossipingPropertyFileSnitch'

@@ -1,19 +1,14 @@
+---
 selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
-
-nvm_nodejs::app_name: 'adtech'
-nvm_nodejs::environment: 'production'
-nvm_nodejs::packages:
-  - bower
-  - pm2
 
 ntp::logfile: /var/log/ntp.log
 ntp::minpoll: 10
 ntp::maxpoll: 11
 ntp::iburst_enable: true
 ulimit::use_default_ulimits: false
-ulimit::purge: false
+ulimit::purge: true
 ulimit::rules::limit_config:
   'nrpoc':
     ulimit_domain: '*'
@@ -45,41 +40,20 @@ java::oracles::java_details:
     ensure: 'present'
     version: '8'
     java_se: 'jre'
+
+################# Nodejs ################
+nvm_nodejs::app_name: 'adtech'
+nvm_nodejs::environment: 'production'
+nvm_nodejs::packages:
+  - bower
+  - pm2
+
 zookeeper::hostnames:
   - zookeeper-master.domain.name
   - zookeeper-slave1.domain.name
   - zookeeper-slave2.domain.name
 zookeeper::properties:
   'zookeeper.security.auth_to_local': '::undef'
-
-
-################ cassandra #########################
-cassandra::datastax_repo::pkg_url: 'http://rpm.datastax.com/datastax-ddc/3.9'
-cassandra::package_name: datastax-ddc
-cassandra::service_ensure: running
-cassandra::dc: 'DC1'
-cassandra::settings:
-  'cluster_name': 'MyCassandraCluster'
-  'authenticator': 'AllowAllAuthenticator'
-  'commitlog_directory': '/var/lib/cassandra/commitlog'
-  'commitlog_sync': 'periodic'
-  'commitlog_sync_period_in_ms': 10000
-  'num_tokens': 256
-  'listen_interface': 'eth1'
-  'data_file_directories':
-    - '/var/lib/cassandra/data'
-  'endpoint_snitch': 'GossipingPropertyFileSnitch'
-  'partitioner': 'org.apache.cassandra.dht.Murmur3Partitioner'
-  'saved_caches_directory': '/var/lib/cassandra/saved_caches'
-  'hints_directory': /var/lib/cassandra/hints
-  'seed_provider':
-    - 'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
-      'parameters':
-        - 'seeds': '192.168.33.50'
-  'start_native_transport': true
-cassandra::require:
-    'Class':
-      - cassandra::datastax_repo
 
 ##################### kafka ##############
 kafka::version: '0.10.0.1'
