@@ -13,3 +13,7 @@ node /^adtech-adserver-\w+\.internal$/ {
 node /^adtech-aerospike-\w+\.internal$/ {
   include roles::aerospike
 }
+
+node /^adtech-forntend-\w+\.internal$/ {
+  include roles::aerospike
+}
