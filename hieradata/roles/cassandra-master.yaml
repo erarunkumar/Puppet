@@ -1,0 +1,27 @@
+################ cassandra #########################
+cassandra::datastax_repo::pkg_url: 'http://rpm.datastax.com/datastax-ddc/3.7'
+cassandra::package_name: datastax-ddc
+cassandra::service_ensure: running
+cassandra::dc: 'DC1'
+cassandra::settings:
+  'cluster_name': 'MyCassandraCluster'
+  'authenticator': 'AllowAllAuthenticator'
+  'commitlog_directory': '/var/lib/cassandra/commitlog'
+  'commitlog_sync': 'periodic'
+  'commitlog_sync_period_in_ms': 10000
+  'num_tokens': 256
+  'listen_interface': 'eth1'
+  'data_file_directories':
+    - '/var/lib/cassandra/data'
+  'endpoint_snitch': 'GossipingPropertyFileSnitch'
+  'partitioner': 'org.apache.cassandra.dht.Murmur3Partitioner'
+  'saved_caches_directory': '/var/lib/cassandra/saved_caches'
+  'hints_directory': /var/lib/cassandra/hints
+  'seed_provider':
+    - 'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
+      'parameters':
+        - 'seeds': 'cassandra-master.adtech.com,cassandra-slave.adtech.com'
+  'start_native_transport': true
+cassandra::require:
+    'Class':
+      - cassandra::datastax_repo
