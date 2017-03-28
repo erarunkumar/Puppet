@@ -68,7 +68,7 @@ class spark::config (
   }
 
   service { $servive_name:
-    ensure  => 'stopped',
+    ensure  => 'running',
     enable  => true,
     require => File['initd', $install_path],
   }
