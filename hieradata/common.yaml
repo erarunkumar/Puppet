@@ -46,7 +46,7 @@ nvm_nodejs::app_name: 'adtech'
 nvm_nodejs::environment: 'production'
 nvm_nodejs::packages:
   - bower
-  - pm2
+  - gulp
 
 zookeeper::hostnames:
   - zookeeper-master.domain.name
