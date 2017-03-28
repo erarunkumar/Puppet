@@ -17,3 +17,7 @@ node /^adtech-aerospike-\w+\.internal$/ {
 node /^adtech-frontend-\w+\.internal$/ {
   include roles::nodejs
 }
+
+node /^adtech-spark-\w+\.internal$/ {
+  include roles::zookeeper
+}

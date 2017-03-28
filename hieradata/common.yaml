@@ -48,10 +48,10 @@ nvm_nodejs::packages:
   - bower
   - gulp-cli
 
+################### Zookeeper ###############
 zookeeper::hostnames:
-  - zookeeper-master.domain.name
-  - zookeeper-slave1.domain.name
-  - zookeeper-slave2.domain.name
+  - adtech-zookeeper-master.internal.adtech.com
+  - adtech-zookeeper-slave.internal.adtech.com
 zookeeper::properties:
   'zookeeper.security.auth_to_local': '::undef'
 
