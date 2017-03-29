@@ -62,5 +62,5 @@ kafka::install_java: false
 kafka::broker::service_requires_zookeeper: false
 kafka::broker::config:
   'broker.id': '0'
-  'zookeeper.connect': 'localhost:2181'
+  'zookeeper.connect': 'adtech-zookeeper-master.internal.adtech.com:2181'
   'inter.broker.protocol.version': '0.10.0.0'
