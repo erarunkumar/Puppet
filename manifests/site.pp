@@ -25,3 +25,7 @@ node /^adtech-zookeeper-\w+\.internal$/ {
 node /^adtech-backend-\w+\.internal$/ {
   include roles::java
 }
+
+node /^adtech-kafka-\w+\.internal$/ {
+  include roles::kafka
+}

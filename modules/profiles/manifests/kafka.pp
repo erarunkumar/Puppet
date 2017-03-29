@@ -1,6 +1,7 @@
 # == Class: profiles::kafka
 #
 class profiles::kafka {
-  include kafka
-  include kafka::broker
+  class { 'profiles::java': }->
+  class { 'kafka': }
+  class { 'kafka::broker': }
 }
