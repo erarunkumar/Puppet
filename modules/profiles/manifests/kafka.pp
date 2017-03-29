@@ -2,6 +2,6 @@
 #
 class profiles::kafka {
   class { 'profiles::java': }->
-  class { 'kafka': }
+  class { 'kafka': }->
   class { 'kafka::broker': }
 }

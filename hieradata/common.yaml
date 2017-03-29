@@ -59,6 +59,7 @@ zookeeper::properties:
 kafka::version: '0.10.0.1'
 kafka::scala_version: '2.11'
 kafka::install_java: false
+kafka::broker::service_requires_zookeeper: false
 kafka::broker::config:
   'broker.id': '0'
   'zookeeper.connect': 'localhost:2181'
