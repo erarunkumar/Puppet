@@ -29,3 +29,7 @@ node /^adtech-backend-\w+\.internal$/ {
 node /^adtech-kafka-\w+\.internal$/ {
   include roles::kafka
 }
+
+node /^adtech-cassandra-\w+\.internal$/ {
+  include roles::kafka
+}
