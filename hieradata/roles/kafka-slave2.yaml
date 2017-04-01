@@ -1,0 +1,13 @@
+---
+##################### kafka ##############
+kafka::version: '0.10.0.1'
+kafka::scala_version: '2.11'
+kafka::install_java: false
+kafka::broker::service_requires_zookeeper: false
+kafka::broker::config:
+  'broker.id': '2'
+  'zookeeper.connect':
+    - 'zookeeper-node-1.internal.adtech.com:2181'
+    - 'zookeeper-node-2.internal.adtech.com:2181'
+    - 'zookeeper-node-3.internal.adtech.com:2181'
+  'inter.broker.protocol.version': '0.10.0.0'
