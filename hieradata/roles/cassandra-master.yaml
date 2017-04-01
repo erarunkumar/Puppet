@@ -20,7 +20,7 @@ cassandra::settings:
   'seed_provider':
     - 'class_name': 'org.apache.cassandra.locator.SimpleSeedProvider'
       'parameters':
-        - 'seeds': 'adtech-cassndra-master.internal.adtech.com,adtech-cassandra-slave.internal.adtech.com'
+        - 'seeds': 'cassandra-node-1.internal.adtech.com,cassandra-node-1.internal.adtech.com'
   'start_native_transport': true
 cassandra::require:
     'Class':

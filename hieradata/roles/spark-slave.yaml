@@ -1,5 +1,5 @@
 spark::spark_env:
   - SPARK_LOCAL_IP=%{::ipaddress_eth0}
   - SPARK_MASTER_HOST=%{::ipaddress_eth0}
-  - 'SPARK_DAEMON_MEMORY=1500m'
-spark::master_url: 'adtech-spark-master.internal.adtech.com'
+  - 'SPARK_DAEMON_MEMORY=3g'
+spark::master_url: 'spark-node-1.internal.adtech.com'
