@@ -2,5 +2,5 @@
 #
 class roles::nodejs {
   class { 'profiles::base': }->
-  include profiles::nodejs
+  class { 'profiles::nodejs': }
 }
