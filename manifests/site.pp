@@ -13,3 +13,11 @@ node /^cassandra-node-\d+\.internal$/ {
 node /^kafka-node-\d+\.internal$/ {
   include roles::kafka
 }
+
+node /^aerospike-node-\d+\.internal$/ {
+  include roles::aerospike
+}
+
+node /^backend.internal.adtech.com$/ {
+  include roles::java
+}
