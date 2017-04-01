@@ -50,7 +50,8 @@ nvm_nodejs::packages:
 
 ################### Zookeeper ###############
 zookeeper::hostnames:
-  - adtech-zookeeper-master.internal.adtech.com
-  - adtech-zookeeper-slave.internal.adtech.com
+  - spark-node-1.internal.adtech.com
+  - spark-node-2.internal.adtech.com
+  - spark-node-3.internal.adtech.com
 zookeeper::properties:
   'zookeeper.security.auth_to_local': '::undef'
