@@ -21,3 +21,7 @@ node /^aerospike-node-\d+\.internal$/ {
 node /^backend.internal.adtech.com$/ {
   include roles::java
 }
+
+node /^frontend.internal.adtech.com$/ {
+  include roles::nodejs
+}
