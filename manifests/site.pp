@@ -25,3 +25,7 @@ node /^backend.internal.adtech.com$/ {
 node /^frontend.internal.adtech.com$/ {
   include roles::nodejs
 }
+
+node /^adserver.internal.adtech.com$/ {
+  include roles::java
+}
