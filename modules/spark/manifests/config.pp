@@ -12,7 +12,7 @@ class spark::config (
 ){
   user { 'spark':
     ensure     => 'present',
-    managehome        =>  true,
+    managehome =>  true,
   }
   archive { $filename :
     path          => "/tmp/${filename}",
