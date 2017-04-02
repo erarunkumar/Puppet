@@ -67,6 +67,7 @@ class grizzly (
     owner   => 'root',
     group   => 'root',
     alias   => 'initd'
+    require => File["${app_dir}/bin/grizzly.sh"]
   }
 
   service { $servive_name:
