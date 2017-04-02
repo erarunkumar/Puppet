@@ -66,7 +66,7 @@ class grizzly (
     mode    => '0755',
     owner   => 'root',
     group   => 'root',
-    alias   => 'initd'
+    alias   => 'initd',
     require => File["${app_dir}/bin/grizzly.sh"]
   }
 
