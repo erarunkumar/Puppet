@@ -5,6 +5,5 @@
 class grizzly::params {
   $user        = 'grizzly'
   $home        = "/opt/${user}"
-  $version     = '6.6.0'
   $app_name    = undef
 }

@@ -61,7 +61,7 @@ class grizzly (
   $start_command = "/bin/su grizzly -s /bin/bash -c '${app_dir}/bin/grizzly.sh start'"
   $stop_command  = "/bin/su grizzly -s /bin/bash -c '${app_dir}/bin/grizzly.sh stop'"
 
-  file { '/etc/init.d/spark_slave':
+  file { "/etc/init.d/grizzly_${app_name}":
     content => template('grizzly/init-grizzly-app.erb'),
     mode    => '0755',
     owner   => 'root',

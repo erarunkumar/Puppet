@@ -19,7 +19,7 @@ node /^aerospike-node-\d+\.internal$/ {
 }
 
 node /^backend.internal.adtech.com$/ {
-  include roles::java
+  include roles::grizzly
 }
 
 node /^frontend.internal.adtech.com$/ {
@@ -27,5 +27,5 @@ node /^frontend.internal.adtech.com$/ {
 }
 
 node /^adserver.internal.adtech.com$/ {
-  include roles::java
+  include roles::grizzly
 }
