@@ -70,7 +70,7 @@ class grizzly (
   }
 
   service { $servive_name:
-    ensure   => 'stop',
+    ensure   => 'stopped',
     enable   => true,
     provider => 'redhat',
     require  => File['initd'],
