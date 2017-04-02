@@ -2,9 +2,12 @@
 
 HOME_DIR=$(cd $(dirname $0); cd ..;pwd -P)
 APP_PATH="${HOME_DIR}/application"
+JAR_NAME=$(ls -1 $APP_PATH)
+APP_NAME=$(echo $JAR_NAME | cut -d. -f1)
+SERVICE_NAME=grizzly_${APP_NAME}
 LOGGER_DIRPATH="${HOME_DIR}/${APP_NAME}/log"
-LOGGER_FILEPATH="${HOME_DIR}/log/${SERVICE_NAME}.log"
-PID_FILE="${HOME_DIR}/pid/${SERVICE_NAME}.pid"
+LOGGER_FILEPATH="${HOME_DIR}/log/${APP_NAME}.log"
+PID_FILE="${HOME_DIR}/pid/${APP_NAME}.pid"
 min_mem=$(($(free -m | awk '/^Mem:/{print $2}')*60/100))
 max_mem=$(($(free -m | awk '/^Mem:/{print $2}')*80/100))
 ADDL_PARAMS="-Xms${min_mem}m -Xmx${max_mem}m"
@@ -32,7 +35,6 @@ start() {
     sleep 2
   done
 
-  echo $(cat $LOGGER_FILEPATH)
   status
   return $?
 }
