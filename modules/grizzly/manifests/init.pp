@@ -60,6 +60,7 @@ class grizzly (
   $servive_name  = "grizzly_${app_name}"
   $start_command = "/bin/su grizzly -s /bin/bash -c '${app_dir}/bin/grizzly.sh start'"
   $stop_command  = "/bin/su grizzly -s /bin/bash -c '${app_dir}/bin/grizzly.sh stop'"
+  $status_command  = "/bin/su grizzly -s /bin/bash -c '${app_dir}/bin/grizzly.sh status'"
 
   file { "/etc/init.d/grizzly_${app_name}":
     content => template('grizzly/init-grizzly-app.erb'),

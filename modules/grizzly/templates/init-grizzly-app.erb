@@ -25,6 +25,9 @@ stop() {
   <%= @stop_command %>
 }
 
+status() {
+  <%= @status_command %>
+}
 case $1 in
   start)
       start
@@ -35,5 +38,13 @@ case $1 in
   restart)
       stop
       start
+      ;;
+  status)
+      status
+      ;;
+  *)
+      echo "Usage: $0 {start|stop|restart|status}"
+      echo
+      exit 1
       ;;
 esac
