@@ -27,7 +27,7 @@ nginx::nginx_vhosts:
 nginx::nginx_locations:
   'api':
     location: '/api/'
-    vhost: 'themobiadz.platform.com'
+    server: 'themobiadz.platform.com'
     proxy: '$upstream_backend'
     proxy_set_header:
       - 'X-Custom-Referrer "inmobi"'
@@ -35,7 +35,7 @@ nginx::nginx_locations:
       - 'X-Forwarded-For $proxy_add_x_forwarded_for'
   'api':
     location: '/api/'
-    vhost: 'inmobi.platform.com'
+    server: 'inmobi.platform.com'
     proxy: '$upstream_backend'
     proxy_set_header:
       - 'X-Custom-Referrer "inmobi"'
