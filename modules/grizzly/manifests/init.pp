@@ -50,11 +50,19 @@ class grizzly (
   }
 
   file { "${app_dir}/bin/grizzly.sh":
-    source  => 'puppet:///modules/grizzly/grizzly.sh',
+    content => template('grizzly/grizzly.sh.erb'),
     mode    => '0755',
     owner   => $app_user,
     group   => $app_user,
     require => File["${app_dir}/bin"]
+  }
+
+  file {"${app_dir}/${app_name}/udf":
+    ensure  => directory
+    recurse => remote,
+    source  => "puppet:///modules/grizzly/config/${app_name}",
+    owner   => $app_user,
+    group   => $app_user,
   }
 
   $servive_name  = "grizzly_${app_name}"
