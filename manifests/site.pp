@@ -1,3 +1,7 @@
+node /^puppet-server.internal.adtech.com$/ {
+  include roles::rproxy
+}
+
 node /^spark-node-\d+\.internal$/ {
   include roles::spark
 }
