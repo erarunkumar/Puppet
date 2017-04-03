@@ -20,6 +20,8 @@ class spark::config (
     checksum_type => 'none',
     extract       => true,
     extract_path  => '/opt/',
+    owner         => 'spark',
+    group         => 'spark',
     creates       => "${install_path}/bin",
     cleanup       => true,
   }
@@ -41,11 +43,11 @@ class spark::config (
     mode    => '0755',
     owner   => 'spark',
     group   => 'spark',
-    notify  => Service[$servive_name],
+    notify  => Service[$service_name],
   }
 
   if $spark_master_url != undef {
-    $servive_name  = 'spark_slave'
+    $service_name  = 'spark_slave'
     $start_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-slave.sh spark://${spark_master_url}:7077'"
     $stop_command   = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/stop-slave.sh'"
     file { '/etc/init.d/spark_slave':
@@ -58,7 +60,7 @@ class spark::config (
   } else {
     $start_command = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-master.sh'"
     $stop_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/stop-master.sh'"
-    $servive_name  = 'spark_master'
+    $service_name  = 'spark_master'
     file { '/etc/init.d/spark_master':
       content => template('spark/init.erb'),
       mode    => '0755',
@@ -68,7 +70,7 @@ class spark::config (
     }
   }
 
-  service { $servive_name:
+  service { $service_name:
     ensure   => 'running',
     enable   => true,
     provider => 'redhat',
