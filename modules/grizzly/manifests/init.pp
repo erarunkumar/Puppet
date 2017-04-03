@@ -57,7 +57,7 @@ class grizzly (
     require => File["${app_dir}/bin"]
   }
 
-  file {"${app_dir}/${app_name}/udf/":
+  file {"${app_dir}/udf/":
     ensure  => directory,
     recurse => remote,
     source  => 'puppet:///modules/grizzly/udf',
