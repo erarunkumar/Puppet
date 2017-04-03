@@ -20,7 +20,7 @@ class spark::config (
     checksum_type => 'none',
     extract       => true,
     extract_path  => '/opt/',
-    owner         => 'spark',
+    user          => 'spark',
     group         => 'spark',
     creates       => "${install_path}/bin",
     cleanup       => true,
