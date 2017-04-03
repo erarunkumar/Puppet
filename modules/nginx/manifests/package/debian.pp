@@ -13,12 +13,11 @@
 # Sample Usage:
 #
 # This class file is not called directly
-class nginx::package::debian (
-    $manage_repo              = true,
-    $package_name             = 'nginx',
-    $package_source           = 'nginx',
-    $package_ensure           = 'present',
-    $passenger_package_ensure = 'present'
+class nginx::package::debian(
+    $manage_repo    = true,
+    $package_name   = 'nginx',
+    $package_source = 'nginx',
+    $package_ensure = 'present'
   ) {
 
   $distro = downcase($::operatingsystem)
@@ -35,14 +34,14 @@ class nginx::package::debian (
     case $package_source {
       'nginx', 'nginx-stable': {
         apt::source { 'nginx':
-          location => "https://nginx.org/packages/${distro}",
+          location => "http://nginx.org/packages/${distro}",
           repos    => 'nginx',
           key      => '573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62',
         }
       }
       'nginx-mainline': {
         apt::source { 'nginx':
-          location => "https://nginx.org/packages/mainline/${distro}",
+          location => "http://nginx.org/packages/mainline/${distro}",
           repos    => 'nginx',
           key      => '573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62',
         }
@@ -54,12 +53,13 @@ class nginx::package::debian (
           key      => '16378A33A6EF16762922526E561F9B9CAC40B2F7',
         }
 
-        ensure_packages([ 'apt-transport-https', 'ca-certificates' ])
-
-        Package['apt-transport-https','ca-certificates'] -> Apt::Source['nginx']
+        package { ['apt-transport-https', 'ca-certificates']:
+          ensure => 'present',
+          before => Apt::Source['nginx'],
+        }
 
         package { 'passenger':
-          ensure  => $passenger_package_ensure,
+          ensure  => 'present',
           require => Exec['apt_update'],
         }
 

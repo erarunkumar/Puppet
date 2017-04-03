@@ -3,7 +3,7 @@
 ## Basic NGINX Installation and Configuration
 
 Installing NGINX and setting up your first web host is relatively straightforward.  To install
-NGINX with the Puppet module, simply call the class in a Puppet manifest:
+NGINX with the puppet module, simply call the class in a puppet manifest:
 ```
    class{'nginx': }
 ```
@@ -15,14 +15,14 @@ class{'nginx':
     package_source => 'nginx-mainline'
 }
 ```
-The choices here are `nginx-stable` (the current 'production' level release), `nginx-mainline` (where active development is occuring), as well as `passenger` - you can read a full explanation of the differences [here][nginxpackages]. `passenger` will install Phusion Passenger, as well as their version of nginx built with Passenger support. Keep in mind that changing `package_source` may require some manual intervention if you change this setting after initial configuration. On CentOS / RHEL, there is a soft dependency on EPEL for this (i.e., the module doesn't configure EPEL for you, but will fail if you don't have it).
+The choices here are `nginx-stable` (the current 'production' level release) and `nginx-mainline` (where active development is occuring) - you can read a full explanation of the differences [here][nginxpackages].  
 
 ### Creating Your First Virtual Host
 
 Calling the `nginx` class from your manifest simply installs the NGINX software and puts some basic configuration in place.  In this state, NGINX will not serve web pages or proxy to other services - for that, we need to define a *server*.  In NGINX terminology, a *server* is how we define our services (such as websites) with a name.  (If you are used to configuring Apache, a server is identical to an Apache *virtual host*.)  A simple virtual host that serves static web pages can be defined with a server name and a *web root*, or the directory where our HTML pages are located.
 
 ```
-  nginx::resource::server{'www.myhost.com':
+  nginx::resource::vhost{'www.myhost.com':
     www_root => '/opt/html/',
   }
 ```
@@ -35,7 +35,7 @@ Setting up a simple static webserver is straightforward, but is usually not the 
 ```
   nginx::resource::location{'/blog':
     proxy => 'http://192.168.99.1/' ,
-    server => 'www.myhost.com'
+    vhost => 'www.myhost.com'
    }
 ```
 This will proxy any requests made to `http://www.myhost.com/blog` to the URL `http://192.168.99.1/`.  Pay special attention to the use of `/` at the end of the URL we are proxying to - that will allow your query parameters or subfolder structure on your secondary webserver to remain intact.  
@@ -56,7 +56,7 @@ We can expand on these simple proxies by defining *upstream* resources for our w
   ```
     nginx::resource::location{'/blog':
     proxy => 'http://upstream_app/' ,
-    server => 'www.myhost.com'
+    vhost => 'www.myhost.com'
    }
 ```
 Now `/blog` will proxy requests to services defined in our `upstream_app` resource.
@@ -78,18 +78,18 @@ Combining our configurations above into a single manifest, our code block looks 
     ],
   }
 
-  nginx::resource::server{'www.myhost.com':
+  nginx::resource::vhost{'www.myhost.com':
     www_root => '/opt/html/',
   }
 
   nginx::resource::location{'/proxy':
     proxy => 'http://upstream_app/' ,
-    server => 'www.myhost.com',
+    vhost => 'www.myhost.com',
 
   }
 ```  
 
-In summary, this Puppet code block will:
+In summary, this puppet code block will:
 * Install the latest version of nginx from the 'mainline' nginx distributino.
 * Define a virtual host `www.myhost.com` for our website.
 * Define an *upstream* service that consists of a single external IP address.
@@ -98,7 +98,7 @@ In summary, this Puppet code block will:
 ## References
 There are a number of resources available for learning how to use NGINX effectively.  Here are a few that you may find useful:
 [nginx.org][nginx]:  The NGNIX homepage.
-[NGINX Documentation][nginxdocs]: Open Source NGINX Documentation
+[NGINX Documentation][ngixdocs]: Open Source NGINX Documentation
 [NGINX vs. Apache][nginxvsapache]: A good article from [DigitalOcean][] describing the key differences between the use and architecture of NGINX vs. the Apache HTTPD server.  This is a good article if you are new to NGINX or want a simple overview of the NGINX event driven architecture.
 
 [nginx]: http://ngnix.org

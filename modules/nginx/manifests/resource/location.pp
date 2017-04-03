@@ -7,7 +7,7 @@
 #     (present|absent)
 #   [*internal*]             - Indicates whether or not this loation can be
 #     used for internal requests only. Default: false
-#   [*server*]                - Defines the default server for this location
+#   [*vhost*]                - Defines the default vHost for this location
 #     entry to include with
 #   [*location*]             - Specifies the URI associated with this location
 #     entry
@@ -30,9 +30,7 @@
 #     value of 90 seconds
 #   [*proxy_connect_timeout*] - Override the default the proxy connect timeout
 #     value of 90 seconds
-#   [*proxy_set_header*]     - Array of server headers to set
-#   [*proxy_hide_header*]    - Array of server headers to hide
-#   [*proxy_pass_header*]    - Array of server headers to pass
+#   [*proxy_set_header*]     - Array of vhost headers to set
 #   [*fastcgi*]              - location of fastcgi (host:port)
 #   [*fastcgi_param*]        - Set additional custom fastcgi_params
 #   [*fastcgi_params*]       - optional alternative fastcgi_params file to use
@@ -40,12 +38,10 @@
 #   [*fastcgi_split_path*]   - Allows settings of fastcgi_split_path_info so
 #     that you can split the script_name and path_info via regex
 #   [*uwsgi*]              - location of uwsgi (host:port)
-#   [*uwsgi_param*]        - Set additional custom uwsgi_params
 #   [*uwsgi_params*]       - optional alternative uwsgi_params file to use
-#   [*uwsgi_read_timeout*]   - optional value for uwsgi_read_timeout
 #   [*ssl*]                  - Indicates whether to setup SSL bindings for
 #     this location.
-#   [*ssl_only*]             - Required if the SSL and normal server have the
+#   [*ssl_only*]             - Required if the SSL and normal vHost have the
 #     same port.
 #   [*location_alias*]       - Path to be used as basis for serving requests
 #     for this location
@@ -68,31 +64,26 @@
 #   [*location_custom_cfg_append*]    - Expects a array with extra directives
 #     to put after anything else inside location (used with all other types
 #     except custom_cfg). Used for logical structures such as if.
-#   [*location_cfg_append*]   - Expects a hash with extra directives to put
+#   [*location_cfg_append*]  - Expects a hash with extra directives to put
 #     after everything else inside location (used with all other types except
 #     custom_cfg)
-#   [*include*]               - An array of files to include for this location
-#   [*try_files*]             - An array of file locations to try
-#   [*option*]                - Reserved for future use
+#   [*try_files*]            - An array of file locations to try
+#   [*option*]               - Reserved for future use
 #   [*proxy_cache*]           - This directive sets name of zone for caching.
 #     The same zone can be used in multiple places.
-#   [*proxy_cache_key*]       - Override the default proxy_cache_key of
+#   [*proxy_cache_key*]     - Override the default proxy_cache_key of
 #     $scheme$proxy_host$request_uri
 #   [*proxy_cache_use_stale*] - Override the default proxy_cache_use_stale value
 #     of off.
 #   [*proxy_cache_valid*]     - This directive sets the time for caching
 #     different replies.
-#   [*proxy_method*]          - If defined, overrides the HTTP method of the
+#   [*proxy_method*]         - If defined, overrides the HTTP method of the
 #     request to be passed to the backend.
-#   [*proxy_http_version*]    - Sets the proxy http version
-#   [*proxy_set_body*]        - If defined, sets the body passed to the backend.
-#   [*proxy_buffering*]       - If defined, sets the proxy_buffering to the passed
-#     value.
+#   [*proxy_set_body*]       - If defined, sets the body passed to the backend.
 #   [*auth_basic*]            - This directive includes testing name and password
 #     with HTTP Basic Authentication.
 #   [*auth_basic_user_file*]  - This directive sets the htpasswd filename for
 #     the authentication realm.
-#   [*auth_request*]          - This allows you to specify a custom auth endpoint
 #   [*priority*]              - Location priority. Default: 500. User priority
 #     401-499, 501-599. If the priority is higher than the default priority,
 #     the location will be defined after root, or before root.
@@ -100,7 +91,6 @@
 #     used for mp4 streaming. Default: false
 #   [*flv*]             - Indicates whether or not this loation can be
 #     used for flv streaming. Default: false
-#   [*expires*]         - Setup expires time for locations content
 #
 #
 # Actions:
@@ -112,7 +102,7 @@
 #    ensure   => present,
 #    www_root => '/var/www/bob',
 #    location => '/bob',
-#    server   => 'test2.local',
+#    vhost    => 'test2.local',
 #  }
 #
 #  Custom config example to limit location on localhost,
@@ -126,96 +116,76 @@
 #    ensure              => present,
 #    www_root            => '/var/www/bob',
 #    location            => '/bob',
-#    server              => 'test2.local',
+#    vhost               => 'test2.local',
 #    location_cfg_append => $my_config,
 #  }
 #
 #  Add Custom fastcgi_params
 #  nginx::resource::location { 'test2.local-bob':
-#    ensure        => present,
-#    www_root      => '/var/www/bob',
-#    location      => '/bob',
-#    server        => 'test2.local',
+#    ensure   => present,
+#    www_root => '/var/www/bob',
+#    location => '/bob',
+#    vhost    => 'test2.local',
 #    fastcgi_param => {
-#       'APP_ENV'  => 'local',
-#    }
-#  }
-#
-#  Add Custom uwsgi_params
-#  nginx::resource::location { 'test2.local-bob':
-#    ensure       => present,
-#    www_root     => '/var/www/bob',
-#    location     => '/bob',
-#    server       => 'test2.local',
-#    uwsgi_param  => {
 #       'APP_ENV' => 'local',
 #    }
 #  }
 
 define nginx::resource::location (
-  $ensure                      = present,
-  $internal                    = false,
-  $location                    = $name,
-  $server                      = undef,
-  $www_root                    = undef,
-  $autoindex                   = undef,
-  $index_files                 = [
+  $ensure               = present,
+  $internal             = false,
+  $location             = $name,
+  $vhost                = undef,
+  $www_root             = undef,
+  $autoindex            = undef,
+  $index_files          = [
     'index.html',
     'index.htm',
     'index.php'],
-  $proxy                       = undef,
-  $proxy_redirect              = $::nginx::proxy_redirect,
-  $proxy_read_timeout          = $::nginx::proxy_read_timeout,
-  $proxy_connect_timeout       = $::nginx::proxy_connect_timeout,
-  $proxy_set_header            = $::nginx::proxy_set_header,
-  $proxy_hide_header           = $::nginx::proxy_hide_header,
-  $proxy_pass_header           = $::nginx::proxy_pass_header,
-  $fastcgi                     = undef,
-  $fastcgi_index               = undef,
-  $fastcgi_param               = undef,
-  $fastcgi_params              = "${::nginx::conf_dir}/fastcgi_params",
-  $fastcgi_script              = undef,
-  $fastcgi_split_path          = undef,
-  $uwsgi                       = undef,
-  $uwsgi_param                 = undef,
-  $uwsgi_params                = "${nginx::config::conf_dir}/uwsgi_params",
-  $uwsgi_read_timeout          = undef,
-  $ssl                         = false,
-  $ssl_only                    = false,
-  $location_alias              = undef,
-  $location_satisfy            = undef,
-  $location_allow              = undef,
-  $location_deny               = undef,
-  $option                      = undef,
-  $stub_status                 = undef,
-  $raw_prepend                 = undef,
-  $raw_append                  = undef,
-  $location_custom_cfg         = undef,
-  $location_cfg_prepend        = undef,
-  $location_cfg_append         = undef,
-  $location_custom_cfg_prepend = undef,
-  $location_custom_cfg_append  = undef,
-  $include                     = undef,
-  $try_files                   = undef,
-  $proxy_cache                 = false,
-  $proxy_cache_key             = undef,
-  $proxy_cache_use_stale       = undef,
-  $proxy_cache_valid           = false,
-  $proxy_method                = undef,
-  $proxy_http_version          = undef,
-  $proxy_set_body              = undef,
-  $proxy_buffering             = undef,
-  $auth_basic                  = undef,
-  $auth_basic_user_file        = undef,
-  $auth_request                = undef,
-  $rewrite_rules               = [],
-  $priority                    = 500,
-  $mp4                         = false,
-  $flv                         = false,
-  $expires                     = undef,
+  $proxy                = undef,
+  $proxy_redirect       = $::nginx::config::proxy_redirect,
+  $proxy_read_timeout   = $::nginx::config::proxy_read_timeout,
+  $proxy_connect_timeout = $::nginx::config::proxy_connect_timeout,
+  $proxy_set_header     = $::nginx::config::proxy_set_header,
+  $fastcgi              = undef,
+  $fastcgi_param        = undef,
+  $fastcgi_params       = "${::nginx::config::conf_dir}/fastcgi_params",
+  $fastcgi_script       = undef,
+  $fastcgi_split_path   = undef,
+  $uwsgi                = undef,
+  $uwsgi_params         = "${nginx::config::conf_dir}/uwsgi_params",
+  $ssl                  = false,
+  $ssl_only             = false,
+  $location_alias       = undef,
+  $location_satisfy     = undef,
+  $location_allow       = undef,
+  $location_deny        = undef,
+  $option               = undef,
+  $stub_status          = undef,
+  $raw_prepend          = undef,
+  $raw_append           = undef,
+  $location_custom_cfg  = undef,
+  $location_cfg_prepend = undef,
+  $location_cfg_append  = undef,
+  $location_custom_cfg_prepend  = undef,
+  $location_custom_cfg_append   = undef,
+  $include              = undef,
+  $try_files            = undef,
+  $proxy_cache          = false,
+  $proxy_cache_key      = undef,
+  $proxy_cache_use_stale = undef,
+  $proxy_cache_valid    = false,
+  $proxy_method         = undef,
+  $proxy_set_body       = undef,
+  $auth_basic           = undef,
+  $auth_basic_user_file = undef,
+  $rewrite_rules        = [],
+  $priority             = 500,
+  $mp4             = false,
+  $flv             = false,
 ) {
 
-  $root_group = $::nginx::root_group
+  $root_group = $::nginx::config::root_group
 
   File {
     owner  => 'root',
@@ -227,8 +197,8 @@ define nginx::resource::location (
   validate_re($ensure, '^(present|absent)$',
     "${ensure} is not supported for ensure. Allowed values are 'present' and 'absent'.")
   validate_string($location)
-  if ($server != undef) {
-    validate_string($server)
+  if ($vhost != undef) {
+    validate_string($vhost)
   }
   if ($www_root != undef) {
     validate_string($www_root)
@@ -236,9 +206,7 @@ define nginx::resource::location (
   if ($autoindex != undef) {
     validate_string($autoindex)
   }
-  if ($index_files != undef) {
-    validate_array($index_files)
-  }
+  validate_array($index_files)
   if ($proxy != undef) {
     validate_string($proxy)
   }
@@ -248,8 +216,6 @@ define nginx::resource::location (
   validate_string($proxy_read_timeout)
   validate_string($proxy_connect_timeout)
   validate_array($proxy_set_header)
-  validate_array($proxy_hide_header)
-  validate_array($proxy_pass_header)
   if ($fastcgi != undef) {
     validate_string($fastcgi)
   }
@@ -263,19 +229,10 @@ define nginx::resource::location (
   if ($fastcgi_split_path != undef) {
     validate_string($fastcgi_split_path)
   }
-  if ($fastcgi_index != undef) {
-    validate_string($fastcgi_index)
-  }
   if ($uwsgi != undef) {
     validate_string($uwsgi)
   }
-  if ($uwsgi_param != undef) {
-    validate_hash($uwsgi_param)
-  }
   validate_string($uwsgi_params)
-  if ($uwsgi_read_timeout != undef) {
-    validate_string($uwsgi_read_timeout)
-  }
 
   validate_bool($internal)
 
@@ -346,14 +303,8 @@ define nginx::resource::location (
   if ($proxy_method != undef) {
     validate_string($proxy_method)
   }
-  if ($proxy_http_version != undef) {
-    validate_string($proxy_http_version)
-  }
   if ($proxy_set_body != undef) {
     validate_string($proxy_set_body)
-  }
-  if ($proxy_buffering != undef) {
-    validate_re($proxy_buffering, '^(on|off)$')
   }
   if ($auth_basic != undef) {
     validate_string($auth_basic)
@@ -361,18 +312,12 @@ define nginx::resource::location (
   if ($auth_basic_user_file != undef) {
     validate_string($auth_basic_user_file)
   }
-  if ($auth_request != undef) {
-    validate_string($auth_request)
-  }
   if !is_integer($priority) {
     fail('$priority must be an integer.')
   }
   validate_array($rewrite_rules)
-  if (($priority + 0) < 401) or (($priority + 0) > 599) {
-    fail('$priority must be in the range 401-599.')
-  }
-  if ($expires != undef) {
-    validate_string($expires)
+  if (($priority + 0) < 401) or (($priority + 0) > 899) {
+    fail('$priority must be in the range 401-899.')
   }
 
   # # Shared Variables
@@ -382,14 +327,14 @@ define nginx::resource::location (
   }
 
   ## Check for various error conditions
-  if ($server == undef) {
+  if ($vhost == undef) {
     fail('Cannot create a location reference without attaching to a virtual host')
   }
-  if !($www_root or $proxy or $location_alias or $stub_status or $fastcgi or $uwsgi or $location_custom_cfg or $internal or $try_files or $location_allow or $location_deny) {
-    fail("Cannot create a location reference without a www_root, proxy, location_alias, stub_status, fastcgi, uwsgi, location_custom_cfg, internal, try_files, location_allow, or location_deny defined in ${server}:${title}")
+  if (($www_root == undef) and ($proxy == undef) and ($location_alias == undef) and ($stub_status == undef) and ($fastcgi == undef) and ($uwsgi == undef) and ($location_custom_cfg == undef) and ($internal == false)) {
+    fail('Cannot create a location reference without a www_root, proxy, location_alias, fastcgi, uwsgi, stub_status, internal, or location_custom_cfg defined')
   }
-  if ($www_root and $proxy) {
-    fail("Cannot define both directory and proxy in ${server}:${title}")
+  if (($www_root != undef) and ($proxy != undef)) {
+    fail('Cannot define both directory and proxy in a virtual host')
   }
 
   # Use proxy, fastcgi or uwsgi template if $proxy is defined, otherwise use directory template.
@@ -398,23 +343,34 @@ define nginx::resource::location (
     warning('The $fastcgi_script parameter is deprecated; please use $fastcgi_param instead to define custom fastcgi_params!')
   }
 
-  $server_sanitized = regsubst($server, ' ', '_', 'G')
-  if $::nginx::confd_only {
-    $server_dir = "${::nginx::conf_dir}/conf.d"
-  } else {
-    $server_dir = "${::nginx::conf_dir}/sites-available"
-  }
-
-  $config_file = "${server_dir}/${server_sanitized}.conf"
+  $vhost_sanitized = regsubst($vhost, ' ', '_', 'G')
+  $config_file = "${::nginx::config::conf_dir}/sites-available/${vhost_sanitized}.conf"
 
   $location_sanitized_tmp = regsubst($location, '\/', '_', 'G')
   $location_sanitized = regsubst($location_sanitized_tmp, '\\\\', '_', 'G')
+
+  # Use proxy or fastcgi template if $proxy is defined, otherwise use directory template.
+  if ($proxy != undef) {
+    $content_real = template('nginx/vhost/locations/proxy.erb')
+  } elsif ($location_alias != undef) {
+    $content_real = template('nginx/vhost/locations/alias.erb')
+  } elsif ($stub_status != undef) {
+    $content_real = template('nginx/vhost/locations/stub_status.erb')
+  } elsif ($fastcgi != undef) {
+    $content_real = template('nginx/vhost/locations/fastcgi.erb')
+  } elsif ($uwsgi != undef) {
+    $content_real = template('nginx/vhost/locations/uwsgi.erb')
+  } elsif ($www_root != undef) {
+    $content_real = template('nginx/vhost/locations/directory.erb')
+  } else {
+    $content_real = template('nginx/vhost/locations/empty.erb')
+  }
 
   if $ensure == present and $fastcgi != undef and !defined(File[$fastcgi_params]) {
     file { $fastcgi_params:
       ensure  => present,
       mode    => '0770',
-      content => template('nginx/server/fastcgi_params.erb'),
+      content => template('nginx/vhost/fastcgi_params.erb'),
     }
   }
 
@@ -422,30 +378,37 @@ define nginx::resource::location (
     file { $uwsgi_params:
       ensure  => present,
       mode    => '0770',
-      content => template('nginx/server/uwsgi_params.erb'),
+      content => template('nginx/vhost/uwsgi_params.erb'),
     }
   }
 
-  if $ensure == present {
-    ## Create stubs for server File Fragment Pattern
-    $location_md5 = md5($location)
-    if ($ssl_only != true) {
-      concat::fragment { "${server_sanitized}-${priority}-${location_md5}":
-        target  => $config_file,
-        content => template('nginx/server/location.erb'),
-        order   => $priority,
-      }
+
+  ## Create stubs for vHost File Fragment Pattern
+  $location_md5 = md5($location)
+  if ($ssl_only != true) {
+    concat::fragment { "${vhost_sanitized}-${priority}-${location_md5}":
+      target  => $config_file,
+      content => join([
+        template('nginx/vhost/location_header.erb'),
+        $content_real,
+        template('nginx/vhost/location_footer.erb')
+      ], ''),
+      order   => $priority,
     }
+  }
 
-    ## Only create SSL Specific locations if $ssl is true.
-    if ($ssl == true or $ssl_only == true) {
-      $ssl_priority = $priority + 300
+  ## Only create SSL Specific locations if $ssl is true.
+  if ($ssl == true or $ssl_only == true) {
+    $ssl_priority = $priority + 300
 
-      concat::fragment { "${server_sanitized}-${ssl_priority}-${location_md5}-ssl":
-        target  => $config_file,
-        content => template('nginx/server/location.erb'),
-        order   => $ssl_priority,
-      }
+    concat::fragment { "${vhost_sanitized}-${ssl_priority}-${location_md5}-ssl":
+      target  => $config_file,
+      content => join([
+        template('nginx/vhost/location_header.erb'),
+        $content_real,
+        template('nginx/vhost/location_footer.erb')
+      ], ''),
+      order   => $ssl_priority,
     }
   }
 }

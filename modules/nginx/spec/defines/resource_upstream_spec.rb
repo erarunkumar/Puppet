@@ -7,60 +7,70 @@ describe 'nginx::resource::upstream' do
 
   let :default_params do
     {
-      members: ['test']
+      :members => ['test'],
     }
   end
 
   let :pre_condition do
+      [
+      'include ::nginx::config',
+      ]
+  end
+
+  let :pre_condition do
     [
-      'include ::nginx'
+      'include ::nginx::config',
     ]
   end
 
   describe 'os-independent items' do
     describe 'basic assumptions' do
-      let(:params) { default_params }
+      let :params do default_params end
 
-      it { is_expected.to contain_concat("/etc/nginx/conf.d/#{title}-upstream.conf").that_requires('File[/etc/nginx/conf.d]') }
-      it { is_expected.to contain_concat__fragment("#{title}_upstream_header").with_content(%r{upstream #{title}}) }
+      it { is_expected.to contain_concat("/etc/nginx/conf.d/#{title}-upstream.conf") }
+      it { is_expected.to contain_concat__fragment("#{title}_upstream_header").with_content(/upstream #{title}/) }
 
-      it do
+      it {
         is_expected.to contain_concat__fragment("#{title}_upstream_header").with(
+        {
           'target' => "/etc/nginx/conf.d/#{title}-upstream.conf",
-          'order'  => 10
-        )
-      end
+          'order'  => 10,
+        }
+      )}
 
-      it do
+      it {
         is_expected.to contain_concat__fragment("#{title}_upstream_members").with(
+        {
           'target' => "/etc/nginx/conf.d/#{title}-upstream.conf",
-          'order'  => 50
-        )
-      end
+          'order'  => 50,
+        }
+      )}
 
-      it do
+      it {
         is_expected.to contain_concat__fragment("#{title}_upstream_footer").with(
+        {
           'target' => "/etc/nginx/conf.d/#{title}-upstream.conf",
-          'order'  => 90
-        ).with_content("}\n")
-      end
+          'order'  => 90,
+        }).with_content("}\n")
+      }
     end
 
-    describe 'upstream.conf template content' do
+    describe "upstream.conf template content" do
       [
         {
-          title: 'should contain ordered prepended directives',
-          attr: 'upstream_cfg_prepend',
-          fragment: 'header',
-          value: {
-            'test3'     => 'test value 3',
-            'test6'     => { 'subkey1' => %w(subvalue1 subvalue2) },
-            'keepalive' => 'keepalive 1',
-            'test2'     => 'test value 2',
-            'test5'     => { 'subkey1' => 'subvalue1' },
-            'test4'     => ['test value 1', 'test value 2']
+          :title    => 'should contain ordered prepended directives',
+          :attr     => 'upstream_cfg_prepend',
+          :fragment => 'header',
+          :value => {
+            'test3' => 'test value 3',
+            'test6' => {'subkey1' => ['subvalue1', 'subvalue2']},
+            'test1' => 'test value 1',
+            'test2' => 'test value 2',
+            'test5' => {'subkey1' => 'subvalue1'},
+            'test4' => ['test value 1', 'test value 2'],
           },
-          match: [
+          :match => [
+            '  test1 test value 1;',
             '  test2 test value 2;',
             '  test3 test value 3;',
             '  test4 test value 1;',
@@ -68,46 +78,22 @@ describe 'nginx::resource::upstream' do
             '  test5 subkey1 subvalue1;',
             '  test6 subkey1 subvalue1;',
             '  test6 subkey1 subvalue2;',
-            '  keepalive keepalive 1;'
-          ]
+          ],
         },
         {
-          title: 'should set server',
-          attr: 'members',
-          fragment: 'members',
-          value: %w(test3 test1 test2),
-          match: [
+          :title    => 'should set server',
+          :attr     => 'members',
+          :fragment => 'members',
+          :value    => %W( test3 test1 test2 ),
+          :match    => [
             '  server     test3  fail_timeout=10s;',
             '  server     test1  fail_timeout=10s;',
-            '  server     test2  fail_timeout=10s;'
-          ]
+            '  server     test2  fail_timeout=10s;',
+          ],
         },
-        {
-          title: 'should contain ordered appended directives',
-          attr: 'upstream_cfg_append',
-          fragment: 'footer',
-          value: {
-            'test3' => 'test value 3',
-            'test6' => { 'subkey1' => %w(subvalue1 subvalue2) },
-            'keepalive' => 'keepalive 1',
-            'test2' => 'test value 2',
-            'test5' => { 'subkey1' => 'subvalue1' },
-            'test4' => ['test value 1', 'test value 2']
-          },
-          match: [
-            '  test2 test value 2;',
-            '  test3 test value 3;',
-            '  test4 test value 1;',
-            '  test4 test value 2;',
-            '  test5 subkey1 subvalue1;',
-            '  test6 subkey1 subvalue1;',
-            '  test6 subkey1 subvalue2;',
-            '  keepalive keepalive 1;'
-          ]
-        }
       ].each do |param|
         context "when #{param[:attr]} is #{param[:value]}" do
-          let(:params) { default_params.merge(param[:attr].to_sym => param[:value]) }
+          let :params do default_params.merge({ param[:attr].to_sym => param[:value] }) end
 
           it { is_expected.to contain_concat("/etc/nginx/conf.d/#{title}-upstream.conf").with_mode('0644') }
           it { is_expected.to contain_concat__fragment("#{title}_upstream_#{param[:fragment]}") }
@@ -122,11 +108,11 @@ describe 'nginx::resource::upstream' do
       end
 
       context 'when ensure => absent' do
-        let :params do
-          default_params.merge(
-            ensure: 'absent'
-          )
-        end
+        let :params do default_params.merge(
+          {
+            :ensure => 'absent'
+          }
+        ) end
 
         it { is_expected.to contain_concat("/etc/nginx/conf.d/#{title}-upstream.conf").with_ensure('absent') }
       end

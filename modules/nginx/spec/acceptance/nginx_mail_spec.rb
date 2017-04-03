@@ -1,7 +1,8 @@
 require 'spec_helper_acceptance'
 
-describe 'nginx::resource::mailhost define:' do
-  it 'runs successfully' do
+describe "nginx::resource::mailhost define:" do
+  it 'should run successfully' do
+
     pp = "
     class { 'nginx':
       mail => true,
@@ -13,18 +14,18 @@ describe 'nginx::resource::mailhost define:' do
       listen_port => 587,
       ssl         => true,
       ssl_port    => 465,
-      ssl_cert    => '/etc/pki/tls/certs/blah.cert',
-      ssl_key     => '/etc/pki/tls/private/blah.key',
+      ssl_cert    => '/tmp/blah.cert',
+      ssl_key     => '/tmp/blah.key',
       xclient     => 'off',
     }
     "
 
-    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, :catch_failures => true)
   end
 
   describe file('/etc/nginx/conf.mail.d/domain1.example.conf') do
-    it { is_expected.to be_file }
-    it { is_expected.to contain 'auth_http             localhost/cgi-bin/auth;' }
+   it { is_expected.to be_file }
+   it { is_expected.to contain "auth_http             localhost/cgi-bin/auth;" }
   end
 
   describe port(587) do
@@ -34,4 +35,5 @@ describe 'nginx::resource::mailhost define:' do
   describe port(465) do
     it { is_expected.to be_listening }
   end
+
 end

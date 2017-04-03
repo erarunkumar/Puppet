@@ -16,7 +16,7 @@
 #   [*proxy_recursive*] - Changes the behavior of address acquisition when
 #                         specifying trusted proxies via 'proxies' directive
 #   [*proxies*]         - Hash of network->value mappings.
-#
+
 # Actions:
 #
 # Requires:
@@ -73,8 +73,7 @@ define nginx::resource::geo (
   if ($proxies != undef) { validate_array($proxies) }
   if ($proxy_recursive != undef) { validate_bool($proxy_recursive) }
 
-  $root_group = $::nginx::root_group
-  $conf_dir   = "${::nginx::conf_dir}/conf.d"
+  $root_group = $::nginx::config::root_group
 
   $ensure_real = $ensure ? {
     'absent' => 'absent',
@@ -87,10 +86,9 @@ define nginx::resource::geo (
     mode  => '0644',
   }
 
-  file { "${conf_dir}/${name}-geo.conf":
+  file { "${::nginx::config::conf_dir}/conf.d/${name}-geo.conf":
     ensure  => $ensure_real,
     content => template('nginx/conf.d/geo.erb'),
     notify  => Class['::nginx::service'],
-    require => File[$conf_dir],
   }
 }

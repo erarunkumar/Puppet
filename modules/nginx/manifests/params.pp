@@ -7,7 +7,6 @@ class nginx::params {
     'pid'         => '/var/run/nginx.pid',
     'root_group'  => 'root',
     'log_dir'     => '/var/log/nginx',
-    'log_group'   => 'root',
     'run_dir'     => '/var/nginx',
     'package_name' => 'nginx',
     'manage_repo'  => false,
@@ -17,21 +16,18 @@ class nginx::params {
       $_module_os_overrides = {
         'pid'         => false,
         'daemon_user' => 'http',
-        'log_group'   => 'log',
       }
     }
     'Debian': {
-      if ($::operatingsystem == 'ubuntu' and $::lsbdistcodename in ['lucid', 'precise', 'trusty', 'xenial'])
+      if ($::operatingsystem == 'ubuntu' and $::lsbdistcodename in ['lucid', 'precise', 'trusty'])
       or ($::operatingsystem == 'debian' and $::operatingsystemmajrelease in ['6', '7', '8']) {
         $_module_os_overrides = {
           'manage_repo' => true,
           'daemon_user' => 'www-data',
-          'log_group'   => 'adm',
         }
       } else {
         $_module_os_overrides = {
           'daemon_user' => 'www-data',
-          'log_group'   => 'adm',
         }
       }
     }
@@ -40,7 +36,6 @@ class nginx::params {
         'conf_dir'    => '/usr/local/etc/nginx',
         'daemon_user' => 'www',
         'root_group'  => 'wheel',
-        'log_group'   => 'wheel',
       }
     }
     'Gentoo': {
@@ -52,11 +47,6 @@ class nginx::params {
       if ($::operatingsystem in ['RedHat', 'CentOS'] and $::operatingsystemmajrelease in ['5', '6', '7']) {
         $_module_os_overrides = {
           'manage_repo' => true,
-          'log_group'   => 'nginx',
-        }
-      } else {
-        $_module_os_overrides = {
-          'log_group' => 'nginx',
         }
       }
     }
@@ -71,7 +61,6 @@ class nginx::params {
         'daemon_user' => 'www',
         'root_group'  => 'wheel',
         'log_dir'     => '/var/www/logs',
-        'log_group'   => 'wheel',
         'run_dir'     => '/var/www',
       }
     }
@@ -95,7 +84,6 @@ class nginx::params {
   ### Referenced Variables
   $conf_dir              = $_module_parameters['conf_dir']
   $log_dir               = $_module_parameters['log_dir']
-  $log_group             = $_module_parameters['log_group']
   $run_dir               = $_module_parameters['run_dir']
   $temp_dir              = '/tmp'
   $pid                   = $_module_parameters['pid']
@@ -105,9 +93,9 @@ class nginx::params {
   $global_owner          = 'root'
   $global_group          = $_module_parameters['root_group']
   $global_mode           = '0644'
-  $http_access_log_file  = 'access.log'
+  $http_access_log       = "${log_dir}/access.log"
   $manage_repo           = $_module_parameters['manage_repo']
-  $nginx_error_log_file  = 'error.log'
+  $nginx_error_log       = "${log_dir}/error.log"
   $root_group            = $_module_parameters['root_group']
   $package_name          = $_module_parameters['package_name']
   $proxy_temp_path       = "${run_dir}/proxy_temp"

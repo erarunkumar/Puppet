@@ -14,11 +14,10 @@
 #
 # This class file is not called directly
 class nginx::package::redhat (
-  $manage_repo                 = true,
-  $package_ensure              = 'present',
-  $package_name                = 'nginx',
-  $package_source              = 'nginx-stable',
-  $passenger_package_ensure    = 'present',
+  $manage_repo    = true,
+  $package_ensure = 'present',
+  $package_name   = 'nginx',
+  $package_source = 'nginx-stable',
 ) {
 
   #Install the CentOS-specific packages on that OS, otherwise assume it's a RHEL
@@ -42,12 +41,6 @@ class nginx::package::redhat (
           gpgkey   => 'http://nginx.org/keys/nginx_signing.key',
           before   => Package['nginx'],
         }
-
-        yumrepo { 'passenger':
-          ensure => absent,
-          before => Package['nginx'],
-        }
-
       }
       'nginx-mainline': {
         yumrepo { 'nginx-release':
@@ -59,42 +52,9 @@ class nginx::package::redhat (
           gpgkey   => 'http://nginx.org/keys/nginx_signing.key',
           before   => Package['nginx'],
         }
-
-        yumrepo { 'passenger':
-          ensure => absent,
-          before => Package['nginx'],
-        }
-
-      }
-      'passenger': {
-        if ($::operatingsystem in ['RedHat', 'CentOS']) and ($::operatingsystemmajrelease in ['6', '7']) {
-          yumrepo { 'passenger':
-            baseurl       => "https://oss-binaries.phusionpassenger.com/yum/passenger/el/${::operatingsystemmajrelease}/\$basearch",
-            descr         => 'passenger repo',
-            enabled       => '1',
-            gpgcheck      => '0',
-            repo_gpgcheck => '1',
-            priority      => '1',
-            gpgkey        => 'https://packagecloud.io/gpg.key',
-            before        => Package['nginx'],
-          }
-
-          yumrepo { 'nginx-release':
-            ensure => absent,
-            before => Package['nginx'],
-          }
-
-          package { 'passenger':
-            ensure  => $passenger_package_ensure,
-            require => Yumrepo['passenger'],
-          }
-
-        } else {
-          fail("${::operatingsystem} version ${::operatingsystemmajrelease} is unsupported with \$package_source 'passenger'")
-        }
       }
       default: {
-        fail("\$package_source must be 'nginx-stable', 'nginx-mainline', or 'passenger'. It was set to '${package_source}'")
+        fail("\$package_source must be 'nginx-stable' or 'nginx-mainline'. It was set to '${package_source}'")
       }
     }
   }
