@@ -60,9 +60,26 @@ class grizzly (
   file {"${app_dir}/${app_name}/udf":
     ensure  => directory
     recurse => remote,
-    source  => "puppet:///modules/grizzly/config/${app_name}",
+    source  => 'puppet:///modules/grizzly/config',
     owner   => $app_user,
     group   => $app_user,
+    require => User[$app_user]
+  }
+
+  file { '/etc/mobiadz':
+    ensure  => directory
+    owner   => $app_user,
+    group   => $app_user,
+    require => User[$app_user]
+  }
+
+  file { '/etc/mobiadz/properties':
+    ensure  => directory
+    recurse => remote,
+    source  => "puppet:///modules/grizzly/properties/${app_name}",
+    owner   => $app_user,
+    group   => $app_user,
+    require => User[$app_user]
   }
 
   $servive_name  = "grizzly_${app_name}"
