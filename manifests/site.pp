@@ -33,3 +33,6 @@ node /^frontend.internal.adtech.com$/ {
 node /^adserver.internal.adtech.com$/ {
   include roles::grizzly
 }
+node /^rproxy.internal.adtech.com$/ {
+  include roles::rproxy
+}
