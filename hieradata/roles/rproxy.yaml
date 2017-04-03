@@ -5,6 +5,8 @@ nginx::nginx_vhosts:
       - 'X-Custom-Referrer "mobiadz"'
       - 'X-Real-IP $remote_addr'
       - 'X-Forwarded-For $proxy_add_x_forwarded_for'
+      - 'real_ip_header X-Forwarded-For'
+      - 'set_real_ip_from 0.0.0.0/0'
     server_name:
       - "themobiadz.platform.com"
     resolver:
@@ -20,6 +22,8 @@ nginx::nginx_vhosts:
       - 'X-Custom-Referrer "mobiadz"'
       - 'X-Real-IP $remote_addr'
       - 'X-Forwarded-For $proxy_add_x_forwarded_for'
+      - 'real_ip_header X-Forwarded-For'
+      - 'set_real_ip_from 0.0.0.0/0'
     raw_prepend:
     #  - "if ($host !~* ^www\\.) { rewrite ^ https://themobiadz.platform.com$request_uri? permanent; }"
     #  - "if ($http_x_forwarded_proto != 'https') { rewrite ^ https://themobiadz.platform.com$request_uri? permanent; }"
@@ -29,7 +33,7 @@ nginx::nginx_vhosts:
       - "inmobi.platform.com"
 
 nginx::nginx_locations:
-  'api':
+  'themobiadz-api':
     location: '/api/'
     vhost: 'themobiadz.platform.com'
     proxy: '$upstream_backend'
@@ -37,7 +41,9 @@ nginx::nginx_locations:
       - 'X-Custom-Referrer "inmobi"'
       - 'X-Real-IP $remote_addr'
       - 'X-Forwarded-For $proxy_add_x_forwarded_for'
-  'api':
+      - 'real_ip_header X-Forwarded-For'
+      - 'set_real_ip_from 0.0.0.0/0'
+  'inmobi-api':
     location: '/api/'
     vhost: 'inmobi.platform.com'
     proxy: '$upstream_backend'
@@ -45,3 +51,5 @@ nginx::nginx_locations:
       - 'X-Custom-Referrer "inmobi"'
       - 'X-Real-IP $remote_addr'
       - 'X-Forwarded-For $proxy_add_x_forwarded_for'
+      - 'real_ip_header X-Forwarded-For'
+      - 'set_real_ip_from 0.0.0.0/0'
