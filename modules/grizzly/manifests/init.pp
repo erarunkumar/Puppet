@@ -79,7 +79,7 @@ class grizzly (
     source  => "puppet:///modules/grizzly/${app_name}/properties",
     owner   => $app_user,
     group   => $app_user,
-    require => File[/etc/mobiadz]
+    require => File['/etc/mobiadz/']
   }
 
   $servive_name  = "grizzly_${app_name}"
