@@ -30,7 +30,6 @@ PID_DIR="/var/run/pid"
 PID_FILE="$PID_DIR/$APP_NAME.pid"
 LOG_DIR="/var/log/node"
 LOG_FILE="$LOG_DIR/$APP_NAME.log"
-NODE_EXEC=$(which node)
 
 USAGE="Usage: $0 {start|stop|restart|status} [--force]"
 FORCE_OP=false
@@ -55,7 +54,7 @@ start_it() {
     chown $USER:$USER "$LOG_DIR"
 
     echo "Starting $APP_NAME ..."
-    echo "cd $APP_DIR && PORT=$PORT NODE_ENV=$NODE_ENV NODE_CONFIG_DIR=$CONFIG_DIR $NODE_EXEC $APP_DIR/$NODE_APP $KWARGS 1>$LOG_FILE 2>&1 & echo \$! > $PID_FILE" | sudo -i -u $USER
+    echo "source .bashrc && cd $APP_DIR && npm run build $KWARGS 1>$LOG_FILE 2>&1 & echo \$! > $PID_FILE" | sudo -i -u $USER
     echo "$APP_NAME started with pid $(get_pid)"
 }
 

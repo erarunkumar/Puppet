@@ -5,5 +5,6 @@ class profiles::base {
   include ntp
   include selinux
   include ulimit
+  include packages
   include ulimit::rules
 }

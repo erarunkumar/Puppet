@@ -3,6 +3,10 @@ selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
 
+packages::enhancers:
+  - wget
+  - epel-release
+  - vim
 ntp::logfile: /var/log/ntp.log
 ntp::minpoll: 10
 ntp::maxpoll: 11
