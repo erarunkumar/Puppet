@@ -57,7 +57,7 @@ class grizzly (
     require => File["${app_dir}/bin"]
   }
 
-  file {"${app_dir}/${app_name}/udf":
+  file {"${app_dir}/${app_name}/udf/":
     ensure  => directory,
     recurse => remote,
     source  => 'puppet:///modules/grizzly/udf',
@@ -73,7 +73,7 @@ class grizzly (
     require => User[$app_user]
   }
 
-  file { '/etc/mobiadz/properties':
+  file { '/etc/mobiadz/properties/':
     ensure  => directory,
     recurse => remote,
     source  => "puppet:///modules/grizzly/${app_name}/properties",
