@@ -1,16 +1,19 @@
----
 nginx::nginx_vhosts:
   'themobiadz.platform.com':
     proxy: '$upstream_frontend'
-    proxy_set_header: 'X-Custom-Referrer "mobiadz",'
+    proxy_set_header:
+      - 'X-Custom-Referrer "mobiadz"'
+      - 'X-Real-IP $remote_addr'
+      - 'X-Forwarded-For $proxy_add_x_forwarded_for'
     server_name:
       - "themobiadz.platform.com"
     resolver:
-      - "10.0.0.2 valid=3s"
+      - "17.0.0.2 valid=3s"
     raw_prepend:
     #  - "if ($host !~* ^www\\.) { rewrite ^ https://themobiadz.platform.com$request_uri? permanent; }"
     #  - "if ($http_x_forwarded_proto != 'https') { rewrite ^ https://themobiadz.platform.com$request_uri? permanent; }"
-      - "set $upstream_connectors \"http://elb.themobiadz.platform.com:8080\";"
+      - "set $upstream_backend \"http://elb.themobiadz.platform.com:8080\";"
+      - "set $upstream_frontend \"http://elb.themobiadz.platform.com:8080\";"
   'inmobi.platform.com':
     proxy: '$upstream_frontend'
     proxy_set_header:
@@ -20,7 +23,8 @@ nginx::nginx_vhosts:
     raw_prepend:
     #  - "if ($host !~* ^www\\.) { rewrite ^ https://themobiadz.platform.com$request_uri? permanent; }"
     #  - "if ($http_x_forwarded_proto != 'https') { rewrite ^ https://themobiadz.platform.com$request_uri? permanent; }"
-      - "set $upstream_connectors \"http://elb.inmobi.platform.com:8080\";"
+      - "set $upstream_backend \"http://elb.inmobi.platform.com:8080\";"
+      - "set $upstream_frontend \"http://elb.themobiadz.platform.com:8080\";"
     server_name:
       - "inmobi.platform.com"
 
