@@ -33,7 +33,8 @@ class grizzly (
     ensure  => directory,
     owner   => $app_user,
     group   => $app_user,
-    require => User[$app_user]
+    require => User[$app_user],
+    mode    => '0755'
   }
 
   file { "${app_dir}/bin":
