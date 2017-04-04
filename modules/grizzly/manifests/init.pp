@@ -74,15 +74,14 @@ class grizzly (
       group   => $app_user,
       require => User[$app_user]
     }
-
-    file { '/etc/mobiadz/properties/':
-      ensure  => directory,
-      recurse => remote,
-      source  => "puppet:///modules/grizzly/${app_name}/properties",
-      owner   => $app_user,
-      group   => $app_user,
-      require => File['/etc/mobiadz/']
-    }
+  }
+  file { '/etc/mobiadz/properties/':
+    ensure  => directory,
+    recurse => remote,
+    source  => "puppet:///modules/grizzly/${app_name}/properties",
+    owner   => $app_user,
+    group   => $app_user,
+    require => File['/etc/mobiadz/']
   }
 
   $servive_name  = "grizzly_${app_name}"

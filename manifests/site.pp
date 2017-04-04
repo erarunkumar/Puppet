@@ -37,6 +37,6 @@ node /^rproxy.internal.adtech.com$/ {
   include roles::rproxy
 }
 
-node /^consumer-node-\d+\.internal$/ {
+node /^analytics-node-\d+\.internal$/ {
   include roles::grizzly
 }
