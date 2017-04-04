@@ -7,7 +7,7 @@ class grizzly (
   $app_home         = $::grizzly::params::home,
   $app_name         = $::grizzly::params::app_name,
   $app_dir          = "${app_home}/${app_name}",
-  Boolean $property = false
+  $property         = false
 ) inherits ::grizzly::params {
 
   user { $app_user:
