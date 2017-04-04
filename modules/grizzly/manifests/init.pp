@@ -67,14 +67,14 @@ class grizzly (
       group   => $app_user,
       require => User[$app_user]
     }
-
-    file { '/etc/mobiadz':
-      ensure  => directory,
-      owner   => $app_user,
-      group   => $app_user,
-      require => User[$app_user]
-    }
   }
+  file { '/etc/mobiadz':
+    ensure  => directory,
+    owner   => $app_user,
+    group   => $app_user,
+    require => User[$app_user]
+  }
+
   file { '/etc/mobiadz/properties/':
     ensure  => directory,
     recurse => remote,
