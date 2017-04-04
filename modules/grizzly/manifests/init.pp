@@ -3,10 +3,11 @@
 # Full description of class a here.
 #
 class grizzly (
-  $app_user    = $::grizzly::params::user,
-  $app_home    = $::grizzly::params::home,
-  $app_name    = $::grizzly::params::app_name,
-  $app_dir     = "${app_home}/${app_name}",
+  $app_user         = $::grizzly::params::user,
+  $app_home         = $::grizzly::params::home,
+  $app_name         = $::grizzly::params::app_name,
+  $app_dir          = "${app_home}/${app_name}",
+  Boolean $property = false
 ) inherits ::grizzly::params {
 
   user { $app_user:
@@ -56,30 +57,31 @@ class grizzly (
     group   => $app_user,
     require => File["${app_dir}/bin"]
   }
+  if $property {
+    file { "${app_dir}/udf/":
+      ensure  => directory,
+      recurse => remote,
+      source  => 'puppet:///modules/grizzly/udf',
+      owner   => $app_user,
+      group   => $app_user,
+      require => User[$app_user]
+    }
 
-  file {"${app_dir}/udf/":
-    ensure  => directory,
-    recurse => remote,
-    source  => 'puppet:///modules/grizzly/udf',
-    owner   => $app_user,
-    group   => $app_user,
-    require => User[$app_user]
-  }
+    file { '/etc/mobiadz':
+      ensure  => directory,
+      owner   => $app_user,
+      group   => $app_user,
+      require => User[$app_user]
+    }
 
-  file { '/etc/mobiadz':
-    ensure  => directory,
-    owner   => $app_user,
-    group   => $app_user,
-    require => User[$app_user]
-  }
-
-  file { '/etc/mobiadz/properties/':
-    ensure  => directory,
-    recurse => remote,
-    source  => "puppet:///modules/grizzly/${app_name}/properties",
-    owner   => $app_user,
-    group   => $app_user,
-    require => File['/etc/mobiadz/']
+    file { '/etc/mobiadz/properties/':
+      ensure  => directory,
+      recurse => remote,
+      source  => "puppet:///modules/grizzly/${app_name}/properties",
+      owner   => $app_user,
+      group   => $app_user,
+      require => File['/etc/mobiadz/']
+    }
   }
 
   $servive_name  = "grizzly_${app_name}"
