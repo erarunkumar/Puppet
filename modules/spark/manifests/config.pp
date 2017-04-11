@@ -3,7 +3,7 @@
 # Full description of class a here.
 #
 class spark::config (
-  $dirname          = 'spark-2.0.0-bin-hadoop2.7',
+  $dirname          = 'spark-2.1.0-bin-hadoop2.7',
   $filename         = "${dirname}.tgz",
   $install_path     = "/opt/${dirname}",
   $spark_home       = "/opt/${dirname}",
@@ -16,16 +16,17 @@ class spark::config (
   }
   archive { $filename :
     path          => "/tmp/${filename}",
-#    source        => 'https://archive.apache.org/dist/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz',
-    source        => 'https://archive.apache.org/dist/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz',
+    source        => 'https://archive.apache.org/dist/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz',
     checksum_type => 'none',
     extract       => true,
     extract_path  => '/opt/',
-    user          => 'spark',
-    group         => 'spark',
+    user          => 'root',
+    group         => 'root',
     creates       => "${install_path}/bin",
     cleanup       => true,
+    require       => User['spark']
   }
+
   file { '/opt/spark':
     ensure  => link,
     target  => "/opt/${dirname}",
@@ -36,6 +37,7 @@ class spark::config (
     ensure  => directory,
     owner   => 'spark',
     group   => 'spark',
+    recurse => true,
     require => Archive[$filename]
   }
 
