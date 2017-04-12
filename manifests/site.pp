@@ -1,42 +1,42 @@
-node /^puppet-server.internal2.adtech.com$/ {
+node /^puppet-server.internal.adtech.com$/ {
   include roles::rproxy
 }
 
-node /^spark-node-\d+\.internal2$/ {
+node /^spark-node-\d+\.internal$/ {
   include roles::spark
 }
 
-node /^zookeeper-node-\d+\.internal2$/ {
+node /^zookeeper-node-\d+\.internal$/ {
   include roles::zookeeper
 }
 
-node /^cassandra-node-\d+\.internal2$/ {
+node /^cassandra-node-\d+\.internal$/ {
   include roles::cassandra
 }
 
-node /^kafka-node-\d+\.internal2$/ {
+node /^kafka-node-\d+\.internal$/ {
   include roles::kafka
 }
 
-node /^aerospike-node-\d+\.internal2$/ {
+node /^aerospike-node-\d+\.internal$/ {
   include roles::aerospike
 }
 
-node /^backend.internal2.adtech.com$/ {
+node /^backend.internal.adtech.com$/ {
   include roles::grizzly
 }
 
-node /^frontend.internal2.adtech.com$/ {
+node /^frontend.internal.adtech.com$/ {
   include roles::nodejs
 }
 
-node /^adserver.internal2.adtech.com$/ {
+node /^adserver.internal.adtech.com$/ {
   include roles::grizzly
 }
-node /^rproxy.internal2.adtech.com$/ {
+node /^rproxy.internal.adtech.com$/ {
   include roles::rproxy
 }
 
-node /^analytics-node-\d+\.internal2$/ {
+node /^analytics-node-\d+\.internal$/ {
   include roles::grizzly
 }
