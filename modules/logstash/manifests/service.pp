@@ -90,7 +90,7 @@ class logstash::service {
     # Invoke 'system-install', which generates startup scripts based on the
     # contents of the 'startup.options' file.
     exec { 'logstash-system-install':
-      command     => "${logstash::home_dir}/bin/system-install",
+      command     => "/bin/bash -c \"${logstash::home_dir}/bin/system-install\"",
       refreshonly => true,
       notify      => Service['logstash'],
     }
