@@ -1,0 +1,23 @@
+{
+  "CHANGELOG.md": "810dcbd8ed926d6c6e8967f057b52d2a",
+  "CONTRIBUTING.md": "f067723f28f0e55e878fe3718c5a8813",
+  "CONTRIBUTORS": "790f16c7e0fb94f605da6d6d73f2c354",
+  "Gemfile": "d3edcd205cd7408ef4edf3f05316216d",
+  "Gemfile.lock": "b764cf2e1914817e8e04a700fc6e4c8b",
+  "LICENSE": "5fa2312b5e0d022df6bda9bcabc29c64",
+  "Makefile": "205b5c9df2923a68d651fca0e58e03fa",
+  "README.markdown": "d80c462b90f8f02710ff14fb09f601b3",
+  "Rakefile": "cd676339434cc34993ea07fd2042849e",
+  "lib/puppet/provider/elastic_kibana.rb": "dced9b3db25ceb6028923cf925803ebf",
+  "lib/puppet/provider/kibana_plugin/kibana.rb": "9923efb127c8515f77819a43dae959c4",
+  "lib/puppet/provider/kibana_plugin/kibana_plugin.rb": "2117f26fcd58077dc501f02f4980e70e",
+  "lib/puppet/type/kibana_plugin.rb": "f1b05c29132b580ac9aeae63b5f483a4",
+  "lib/puppet_x/elastic/hash.rb": "5482a43a74b80467b5078cab48aa3cf7",
+  "manifests/config.pp": "c944dfda890f872d37f91dfb14dc5ff3",
+  "manifests/init.pp": "6a2cdccec0c45aa92ad994a751d9b073",
+  "manifests/install.pp": "b67b3410ddc2950595b7bf69558e4013",
+  "manifests/service.pp": "280bc21f60f249bf0a4413b804ca1c91",
+  "metadata.json": "075c5a1feb62f6985322e8859800a5a0",
+  "templates/etc/kibana/kibana.yml.erb": "5504c33d3f079ec3f77ed1f2955956cb",
+  "tests/init.pp": "c9adfb8594175295d6aeb76840fb3443"
+}
