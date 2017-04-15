@@ -1,0 +1,9 @@
+---
+########################## java #############################################
+java::oracles::java_details:
+  'jre8':
+    ensure: 'present'
+    version: '8'
+    java_se: 'jre'
+########################## Logstash configuration ###########################
+logstash::version: '5.0.2'
