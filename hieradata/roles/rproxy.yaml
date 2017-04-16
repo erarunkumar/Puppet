@@ -12,10 +12,22 @@ nginx::nginx_vhosts:
     resolver:
       - "17.0.0.2 valid=3s"
     raw_prepend:
-      - "set $upstream_backend \"http://backend-asg-deployer-elb-691348400.us-east-1.elb.amazonaws.com\";"
-      - "set $upstream_frontend \"http://frontend-asg-elb-896988586.us-west-2.elb.amazonaws.com\";"
-
-
+      - "set $upstream_backend \"http://internal-backend-asg-deployer-elb-1359322463.us-east-1.elb.amazonaws.com\";"
+      - "set $upstream_frontend \"http://internal-frontend-asg-elb-1649591888.us-east-1.elb.amazonaws.com\";"
+  'adserver.mbttk.net':
+    proxy: '$upstream_adserver'
+    proxy_set_header:
+      - 'X-Custom-Referrer "mbttk"'
+      - 'X-Real-IP $remote_addr'
+      - 'X-Forwarded-For $proxy_add_x_forwarded_for'
+      - 'real_ip_header X-Forwarded-For'
+      - 'set_real_ip_from 0.0.0.0/0'
+    server_name:
+      - "adserver.mbttk.net"
+    resolver:
+      - "17.0.0.2 valid=3s"
+    raw_prepend:
+      - "set $upstream_adserver \"http://internal-adserver-asg-deployer-elb-100793534.us-east-1.elb.amazonaws.com\";"
 nginx::nginx_locations:
   'mbttk.net':
     location: '/api/'
