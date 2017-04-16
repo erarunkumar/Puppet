@@ -39,6 +39,14 @@ ulimit::rules::limit_config:
     ulimit_value : 'unlimited'
     priority     : '80'
 
+sudo::purge: false
+sudo::config_file_replace: false
+sudo::configs::configs_hash:
+  'centos':
+    'content': "Defaults:centos    !requiretty"
+  'node':
+    'content': "Defaults:node    !requiretty"
+
 java::oracles::java_details:
   'jre8':
     ensure: 'present'

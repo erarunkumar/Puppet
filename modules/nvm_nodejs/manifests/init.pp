@@ -64,7 +64,7 @@ class nvm_nodejs (
     content => template('nvm_nodejs/init.erb'),
     owner   => root,
     group   => root,
-    mode    => '0644',
+    mode    => '0755',
   } ->
   class { 'nvm_nodejs::service': }
 

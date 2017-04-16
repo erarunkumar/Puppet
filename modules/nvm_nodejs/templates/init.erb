@@ -62,6 +62,7 @@ stop_process() {
     PID=$(get_pid)
     echo "Killing process $PID"
     pkill -P $PID
+    pkill -u `id -u $USER`
 }
 
 remove_pid_file() {
