@@ -9,7 +9,8 @@ class kibana::service {
   $_enable = $::kibana::ensure != 'absent'
 
   service { 'kibana':
-    ensure => $_ensure,
+    ensure => running,
     enable => $_enable,
+    provider => init
   }
 }

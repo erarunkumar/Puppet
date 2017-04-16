@@ -5,5 +5,29 @@ java::oracles::java_details:
     ensure: 'present'
     version: '8'
     java_se: 'jre'
+
 ########################## Logstash configuration ###########################
 logstash::version: '5.0.2'
+
+######################### ElasticSearch #####################################
+elasticsearch::manage_repo: true
+elasticsearch::repo_version: '5.x'
+elasticsearch::autoupgrade: false
+elasticsearch::status: 'enabled'
+elasticsearch::config:
+  'cluster':
+    'name': 'elasticsearch'
+  'discovery.zen.ping.unicast.hosts':
+     - localhost
+elasticsearch::instances:
+  'demo-es1':
+    config:
+      'node.name': 'localhost'
+      'node.data': true
+      'node.master': true
+      'network.host': '0.0.0.0'
+########################## Kibana ##########################################
+kibana::ensure: '5.2.0'
+kibana::config:
+      'server.port': '8080'
+      'server.host': '0.0.0.0'
