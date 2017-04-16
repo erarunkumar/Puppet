@@ -12,8 +12,8 @@ nginx::nginx_vhosts:
     resolver:
       - "17.0.0.2 valid=3s"
     raw_prepend:
-      - "set $upstream_backend \"http://internal-backend-asg-deployer-elb-1359322463.us-east-1.elb.amazonaws.com\";"
-      - "set $upstream_frontend \"http://internal-frontend-asg-elb-1649591888.us-east-1.elb.amazonaws.com\";"
+      - "set $upstream_backend \"http://internal-backend-asg-deployer-elb-1350558814.us-east-1.elb.amazonaws.com\";"
+      - "set $upstream_frontend \"http://internal-frontend-asg-elb-1540120932.us-east-1.elb.amazonaws.com\";"
   'mobiadz.mbttk.net':
     proxy: '$upstream_adserver'
     proxy_set_header:
@@ -27,7 +27,7 @@ nginx::nginx_vhosts:
     resolver:
       - "17.0.0.2 valid=3s"
     raw_prepend:
-      - "set $upstream_adserver \"http://internal-adserver-asg-deployer-elb-100793534.us-east-1.elb.amazonaws.com\";"
+      - "set $upstream_adserver \"http://internal-adserver-asg-deployer-elb-939277188.us-east-1.elb.amazonaws.com\";"
 nginx::nginx_locations:
   'mbttk.net':
     location: '/api/'
