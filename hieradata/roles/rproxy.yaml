@@ -29,9 +29,9 @@ nginx::nginx_vhosts:
     raw_prepend:
       - "set $upstream_adserver \"http://internal-adserver-asg-deployer-elb-939277188.us-east-1.elb.amazonaws.com\";"
 nginx::nginx_locations:
-  'mbttk.net':
+  'mobiadz.themobiadz.com':
     location: '/api/'
-    vhost: 'mbttk.net'
+    vhost: 'mobiadz.themobiadz.com'
     proxy: '$upstream_backend'
     proxy_set_header:
       - 'X-Custom-Referrer "mbttk"'
