@@ -1,5 +1,5 @@
 # == Class: profoles::puppetmater
 #
-class profoles::puppetmater {
+class profiles::puppetmaster {
   include sshkeys::master
 }
