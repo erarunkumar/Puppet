@@ -11,7 +11,7 @@ class spark::config (
   $spark_master_url = $spark::master_url,
   $slave            = $spark::slave,
   $confdir          = "/opt/${dirname}/conf",
-  $sshkey           = '',
+  $sshkey           = $spark::sshkey,
 ){
   user { 'spark':
     ensure     => 'present',

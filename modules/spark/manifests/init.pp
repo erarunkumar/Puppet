@@ -5,7 +5,8 @@
 class spark (
   $spark_env  = undef,
   $master_url = undef,
-  $slave      = undef
+  $slave      = undef,
+  $sshkey     = ''
 ) {
   include spark::config
 }
