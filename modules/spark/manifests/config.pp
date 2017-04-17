@@ -52,7 +52,7 @@ class spark::config (
   }
 
   if $slave != undef {
-    file { "${::confdir}/slaves":
+    file { "${confdir}/slaves":
       content => template('spark/slaves.erb'),
       mode    => '0644',
       owner   => 'spark',
