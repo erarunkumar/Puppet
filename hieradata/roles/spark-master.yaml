@@ -2,3 +2,6 @@ spark::spark_env:
   - SPARK_LOCAL_IP=%{::ipaddress_eth0}
   - SPARK_MASTER_HOST=%{::ipaddress_eth0}
   - 'SPARK_DAEMON_MEMORY=3g'
+spark::slave:
+  - spark-node-2.internal.adtech.com
+  - spark-node-3.internal.adtech.com
