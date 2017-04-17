@@ -47,8 +47,8 @@ sudo::configs::configs_hash:
   'node':
     'content': "Defaults:node    !requiretty"
 sshkeys::master::key_hash:
-  'spark@spark-master'
-  
+  'spark@spark-master': {}
+
 java::oracles::java_details:
   'jre8':
     ensure: 'present'
