@@ -9,7 +9,7 @@ class spark::config (
   $spark_home       = "/opt/${dirname}",
   $spark_env        = $spark::spark_env,
   $spark_master_url = $spark::master_url,
-  $slave            = undef,
+  $slave            = $spark::slave,
   $confdir          = "/opt/${dirname}/conf"
 ){
   user { 'spark':
