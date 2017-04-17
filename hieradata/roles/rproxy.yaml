@@ -34,7 +34,7 @@ nginx::nginx_locations:
     vhost: 'mobiadz.themobiadz.com'
     proxy: '$upstream_backend'
     proxy_set_header:
-      - 'X-Custom-Referrer "mbttk"'
+      - 'X-TenantId "mobiadz"'
       - 'X-Real-IP $remote_addr'
       - 'X-Forwarded-For $proxy_add_x_forwarded_for'
       - 'real_ip_header X-Forwarded-For'
