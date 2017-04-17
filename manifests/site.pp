@@ -22,7 +22,6 @@ node /^aerospike-node-\d+\.internal$/ {
   include roles::aerospike
 }
 
-
 node /^grizzly.internal.adtech.com$/ {
   include roles::grizzly
 }

@@ -29,6 +29,7 @@ class grizzly (
     group   => $app_user,
     require => User[$app_user]
   }
+
   file { "${app_dir}/application":
     ensure  => directory,
     owner   => $app_user,

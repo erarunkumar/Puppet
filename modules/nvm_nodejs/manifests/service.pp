@@ -2,8 +2,8 @@
 #
 class nvm_nodejs::service {
     service { "node_${nvm_nodejs::app_name}":
-      ensure => 'stopped',
-      enable => true,
+      ensure   => 'installed',
+      enable   => true,
       provider => 'redhat',
     }
 }
