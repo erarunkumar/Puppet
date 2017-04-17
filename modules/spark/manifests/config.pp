@@ -78,7 +78,9 @@ class spark::config (
     $start_command = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-master.sh'"
     $stop_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/stop-master.sh'"
     $service_name  = 'spark_master'
-    sshkeys::install_keypair { 'spark@spark-master': }
+    sshkeys::install_keypair { 'spark@spark-master':
+      source => '/etc/sshkeys/spark@spark-master'
+    }
     file { '/etc/init.d/spark_master':
       content => template('spark/init.erb'),
       mode    => '0755',
