@@ -46,6 +46,7 @@ sudo::configs::configs_hash:
     'content': "Defaults:centos    !requiretty"
   'node':
     'content': "Defaults:node    !requiretty"
+
 sshkeys::master::key_hash:
   'spark@spark-master': {}
 

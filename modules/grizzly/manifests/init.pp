@@ -7,13 +7,24 @@ class grizzly (
   $app_home         = $::grizzly::params::home,
   $app_name         = $::grizzly::params::app_name,
   $app_dir          = "${app_home}/${app_name}",
-  $property         = false
+  $property         = false,
+  $sshkey           = '',
 ) inherits ::grizzly::params {
 
   user { $app_user:
     ensure     => present,
     home       => $app_home,
     managehome => true,
+  }
+  if ($sshkey != '') {
+    ssh_authorized_key { $app_user:
+      ensure  => present,
+      name    => $app_user,
+      user    => $app_user,
+      type    => 'rsa',
+      key     => $sshkey,
+      require => User[ $app_user]
+    }
   }
 
   file { $app_dir:

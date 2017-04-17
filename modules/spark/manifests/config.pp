@@ -10,12 +10,25 @@ class spark::config (
   $spark_env        = $spark::spark_env,
   $spark_master_url = $spark::master_url,
   $slave            = $spark::slave,
-  $confdir          = "/opt/${dirname}/conf"
+  $confdir          = "/opt/${dirname}/conf",
+  $sshkey           = '',
 ){
   user { 'spark':
     ensure     => 'present',
     managehome =>  true,
   }
+
+  if ($sshkey != '') {
+    ssh_authorized_key { 'spark':
+      ensure  => present,
+      name    => spark,
+      user    => spark,
+      type    => 'rsa',
+      key     => $sshkey,
+      require => User[spark]
+    }
+  }
+
   archive { $filename :
     path          => "/tmp/${filename}",
     source        => 'https://archive.apache.org/dist/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz',
