@@ -46,6 +46,8 @@ sudo::configs::configs_hash:
     'content': "Defaults:centos    !requiretty"
   'node':
     'content': "Defaults:node    !requiretty"
+grizzly::sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC40tB1b6lSTkS9o+7zr1V8WjS2kOtR372e8+calkcA1i2FoPVvVmyHuhn6JyH6/O9N+xflXZYOCvq1tfvWLlm62Nqb48buGnFrFrF6/UDC3UEivdlK1qzyG8+X6hLpyYUk8MIqP+zY9kCQYTUOHX0uPxFXyiT4CQrq0j5pP1z/q5h6aMpUdqzczPhWe62bUlhft6Dg7z20dRyhZEi5zPmgijUeKgDG262XJRUcwXWmvT+uVaurnKX6Y8dyuDs9GNzEsq/xYnOfVmknjfYh+ve/V46FDPSYp0qDShXW0OlOzQHo2RHp2F5hqsBRt5aOynyT4Di8SSPdN3JpzzHFlB/x'
+spark::sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC40tB1b6lSTkS9o+7zr1V8WjS2kOtR372e8+calkcA1i2FoPVvVmyHuhn6JyH6/O9N+xflXZYOCvq1tfvWLlm62Nqb48buGnFrFrF6/UDC3UEivdlK1qzyG8+X6hLpyYUk8MIqP+zY9kCQYTUOHX0uPxFXyiT4CQrq0j5pP1z/q5h6aMpUdqzczPhWe62bUlhft6Dg7z20dRyhZEi5zPmgijUeKgDG262XJRUcwXWmvT+uVaurnKX6Y8dyuDs9GNzEsq/xYnOfVmknjfYh+ve/V46FDPSYp0qDShXW0OlOzQHo2RHp2F5hqsBRt5aOynyT4Di8SSPdN3JpzzHFlB/x'
 
 sshkeys::master::key_hash:
   'spark@spark-master': {}
