@@ -54,7 +54,7 @@ start_it() {
     chown $USER:$USER "$LOG_DIR"
 
     echo "Starting $APP_NAME ..."
-    echo "source .bashrc && cd $APP_DIR && npm run build $KWARGS 1>$LOG_FILE 2>&1 & echo \$! > $PID_FILE" | sudo -i -u $USER
+    echo "source .bashrc && cd $APP_DIR && npm run build $KWARGS 1>$LOG_FILE 2>&1 & echo \$! > $PID_FILE" | su $USER
     echo "$APP_NAME started with pid $(get_pid)"
 }
 

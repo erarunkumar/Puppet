@@ -9,6 +9,7 @@ class spark::config (
   $spark_home       = "/opt/${dirname}",
   $spark_env        = $spark::spark_env,
   $spark_master_url = $spark::master_url
+  $slave            = undef
 ){
   user { 'spark':
     ensure     => 'present',
@@ -49,6 +50,16 @@ class spark::config (
     notify  => Service[$service_name],
   }
 
+  if $slave != undef {
+    if $::slave != undef {
+      file { "${::confdir}/slaves":
+        content => template('spark/slaves.erb'),
+        mode    => '0644',
+        owner   => 'spark',
+        group   => 'spark',
+      }
+    }
+  }
   if $spark_master_url != undef {
     $service_name  = 'spark_slave'
     $start_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-slave.sh spark://${spark_master_url}:7077'"

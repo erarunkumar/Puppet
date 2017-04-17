@@ -1,5 +1,5 @@
 node /^puppet-server.internal.adtech.com$/ {
-  include roles::rproxy
+  include roles::puppetmaster
 }
 
 node /^spark-node-\d+\.internal$/ {
@@ -38,6 +38,7 @@ node /^frontend.internal.adtech.com$/ {
 node /^adserver.internal.adtech.com$/ {
   include roles::grizzly
 }
+
 node /^rproxy.internal.adtech.com$/ {
   include roles::rproxy
 }
