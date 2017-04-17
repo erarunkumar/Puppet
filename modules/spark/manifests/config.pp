@@ -8,12 +8,27 @@ class spark::config (
   $install_path     = "/opt/${dirname}",
   $spark_home       = "/opt/${dirname}",
   $spark_env        = $spark::spark_env,
-  $spark_master_url = $spark::master_url
+  $spark_master_url = $spark::master_url,
+  $slave            = $spark::slave,
+  $confdir          = "/opt/${dirname}/conf",
+  $sshkey           = $spark::sshkey,
 ){
   user { 'spark':
     ensure     => 'present',
     managehome =>  true,
   }
+
+  if ($sshkey != '') {
+    ssh_authorized_key { 'spark':
+      ensure  => present,
+      name    => spark,
+      user    => spark,
+      type    => 'rsa',
+      key     => $sshkey,
+      require => User[spark]
+    }
+  }
+
   archive { $filename :
     path          => "/tmp/${filename}",
     source        => 'https://archive.apache.org/dist/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz',
@@ -49,6 +64,14 @@ class spark::config (
     notify  => Service[$service_name],
   }
 
+  if $slave != undef {
+    file { "${confdir}/slaves":
+      content => template('spark/slaves.erb'),
+      mode    => '0644',
+      owner   => 'spark',
+      group   => 'spark',
+    }
+  }
   if $spark_master_url != undef {
     $service_name  = 'spark_slave'
     $start_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-slave.sh spark://${spark_master_url}:7077'"
@@ -60,10 +83,18 @@ class spark::config (
       group   => 'root',
       alias   => 'initd'
     }
+    sshkeys::authorize { 'spark':
+      authorized_keys => [
+        'spark@spark-master'
+      ],
+    }
   } else {
     $start_command = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-master.sh'"
     $stop_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/stop-master.sh'"
     $service_name  = 'spark_master'
+    sshkeys::install_keypair { 'spark@spark-master':
+      source => '/etc/sshkeys/spark@spark-master'
+    }
     file { '/etc/init.d/spark_master':
       content => template('spark/init.erb'),
       mode    => '0755',
@@ -73,10 +104,10 @@ class spark::config (
     }
   }
 
-  service { $service_name:
-    ensure   => 'running',
-    enable   => true,
-    provider => 'redhat',
-    require  => File['initd', $install_path],
-  }
+  #service { $service_name:
+  #  ensure   => 'running',
+  #  enable   => true,
+  #  provider => 'redhat',
+  #  require  => File['initd', $install_path],
+  #}
 }

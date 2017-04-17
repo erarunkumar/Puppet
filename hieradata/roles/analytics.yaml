@@ -1,3 +1,10 @@
 ---
 grizzly::app_name: "analytics"
 grizzly::property: false
+sudo::purge: false
+sudo::config_file_replace: false
+sudo::configs::configs_hash:
+  'centos':
+    'content': "Defaults:centos    !requiretty"
+  'grizzly':
+    'content': "grizzly ALL=NOPASSWD:/sbin/service *\ngrizzly ALL=NOPASSWD:/usr/sbin/service *\nDefaults:grizzly    !requiretty"
