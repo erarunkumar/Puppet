@@ -8,7 +8,7 @@ class spark::config (
   $install_path     = "/opt/${dirname}",
   $spark_home       = "/opt/${dirname}",
   $spark_env        = $spark::spark_env,
-  $spark_master_url = $spark::master_url
+  $spark_master_url = $spark::master_url,
   $slave            = undef
 ){
   user { 'spark':
@@ -51,13 +51,11 @@ class spark::config (
   }
 
   if $slave != undef {
-    if $::slave != undef {
-      file { "${::confdir}/slaves":
-        content => template('spark/slaves.erb'),
-        mode    => '0644',
-        owner   => 'spark',
-        group   => 'spark',
-      }
+    file { "${::confdir}/slaves":
+      content => template('spark/slaves.erb'),
+      mode    => '0644',
+      owner   => 'spark',
+      group   => 'spark',
     }
   }
   if $spark_master_url != undef {
