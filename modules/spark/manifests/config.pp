@@ -18,17 +18,6 @@ class spark::config (
     managehome =>  true,
   }
 
-  if ($sshkey != '') {
-    ssh_authorized_key { 'spark':
-      ensure  => present,
-      name    => spark,
-      user    => spark,
-      type    => 'rsa',
-      key     => $sshkey,
-      require => User[spark]
-    }
-  }
-
   archive { $filename :
     path          => "/tmp/${filename}",
     source        => 'https://archive.apache.org/dist/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz',
