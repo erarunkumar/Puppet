@@ -1,7 +1,7 @@
 # == Class: sshkeys::authorizes
 #
 class sshkeys::authorizes(
-  sshkeys = {},
+  $sshkeys = {},
 ){
     create_resources('sshkeys::authorize',hiera('sshkeys'))
 }
