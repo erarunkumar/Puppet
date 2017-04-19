@@ -52,6 +52,14 @@ spark::sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC40tB1b6lSTkS9o+7zr1V8WjS2kOtR372e
 sshkeys::master::key_hash:
   'spark@spark-master': {}
 
+sshkeys::install_keypairs::keypairs:
+  'spark@spark-master':
+    source: '/etc/sshkeys/spark@spark-master'
+sshkeys::authorizes::sshkeys:
+  'spark':
+    authorized_keys:
+      - 'spark@spark-master'
+      - 'spark@adserver'
 java::oracles::java_details:
   'jre8':
     ensure: 'present'
