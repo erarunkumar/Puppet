@@ -3,5 +3,5 @@
 class sshkeys::authorizes(
   $sshkeys = {},
 ){
-    create_resources('sshkeys::authorize',hiera('sshkeys'))
+    create_resources('sshkeys::authorize', $sshkeys)
 }

@@ -3,5 +3,5 @@
 class sshkeys::install_keypairs (
   $keypairs = {},
 ){
-    create_resources('sshkeys::install_keypair',hiera('keypairs'))
+    create_resources('sshkeys::install_keypair', $keypairs)
 }
