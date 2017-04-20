@@ -18,17 +18,6 @@ class spark::config (
     managehome =>  true,
   }
 
-  if ($sshkey != '') {
-    ssh_authorized_key { 'spark':
-      ensure  => present,
-      name    => spark,
-      user    => spark,
-      type    => 'rsa',
-      key     => $sshkey,
-      require => User[spark]
-    }
-  }
-
   archive { $filename :
     path          => "/tmp/${filename}",
     source        => 'https://archive.apache.org/dist/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz',
@@ -83,18 +72,10 @@ class spark::config (
       group   => 'root',
       alias   => 'initd'
     }
-    sshkeys::authorize { 'spark':
-      authorized_keys => [
-        'spark@spark-master'
-      ],
-    }
   } else {
     $start_command = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/start-master.sh'"
     $stop_command  = "/bin/su spark -s /bin/bash -c '${install_path}/sbin/stop-master.sh'"
     $service_name  = 'spark_master'
-    sshkeys::install_keypair { 'spark@spark-master':
-      source => '/etc/sshkeys/spark@spark-master'
-    }
     file { '/etc/init.d/spark_master':
       content => template('spark/init.erb'),
       mode    => '0755',
