@@ -4,7 +4,7 @@ class spark::spark_pub_key(
   $sshkeys = ''
   ) {
 
-  file { '/etc/sshkeys/spark@adserver.pub ':
+  file { '/etc/sshkeys/spark@adserver.pub':
     content => $sshkeys,
   }
 }
