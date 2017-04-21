@@ -2,7 +2,7 @@
 #
 class profiles::fstab {
   exec {'filesystem':
-    command => '/sbin/mkfs.xfs /dev/xvdb'
+    command => '/sbin/mkfs.xfs /dev/xvdb',
     unless  => '/sbin/blkid -t TYPE=ext4 /dev/vdc'
   }
   mounts { 'Mount point for ext4':
