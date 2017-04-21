@@ -1,11 +1,11 @@
 # == Class: profiles::fstab
 #
 class profiles::fstab {
-  mounts { 'Mount point for ext4':
-    ensure => present,
-    source => '/dev/xvdb',
-    dest   => '/mnt/data',
-    type   => 'ext',
-    opts   => 'nofail,defaults,noatime',
+  mount { "/mnt/data":
+      device  => "/dev/sdb1",
+      fstype  => "ext4",
+      ensure  => "mounted",
+      options => "defaults",
+      atboot  => "true",
   }
 }
