@@ -1,10 +1,9 @@
 # == Class: profiles::fstab
 #
 class profiles::fstab {
-  filesystem { '/dev/xvdb':
-    ensure  => present,
-    fs_type => 'xfs',
-    options => '-b 4096 -E stride=32,stripe-width=64',
+  exec {'filesystem':
+    command => '/sbin/mkfs.xfs /dev/xvdb'
+    unless  => '/sbin/blkid -t TYPE=ext4 /dev/vdc'
   }
   mounts { 'Mount point for ext4':
     ensure  => present,
@@ -12,6 +11,6 @@ class profiles::fstab {
     dest    => '/mnt/',
     type    => 'xfs',
     opts    => 'nofail,defaults,noatime',
-    require => Class['filesystem']
+    require => Exec['filesystem']
   }
 }
