@@ -4,7 +4,7 @@ class profiles::fstab {
   mounts { 'Mount point for ext4':
     ensure => present,
     source => '/dev/xvdb',
-    dest   => '/mnt',
+    dest   => '/mnt/data',
     type   => 'ext4',
     opts   => 'nofail,defaults,noatime',
   }
