@@ -27,6 +27,6 @@ aerospike::config_ns:
     'high-water-memory-pct': '90'
     'stop-writes-pct': '90'
     'storage-engine device':
-      'device': '/dev/xvda'
-      'write-block-size': '128K'   
-    'storage-engine memory': ''
+      'device /dev/xvdb'
+      'write-block-size 128K'
+#    'storage-engine memory': ''
