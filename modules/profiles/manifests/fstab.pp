@@ -5,7 +5,7 @@ class profiles::fstab {
     ensure => present,
     source => '/dev/xvdb',
     dest   => '/mnt/data',
-    type   => 'ext4',
+    type   => 'ext',
     opts   => 'nofail,defaults,noatime',
   }
 }
