@@ -22,6 +22,11 @@ aerospike::config_net_hb:
 aerospike::config_ns:
   'mobiadz':
     'replication-factor': 2
-    'memory-size': '4G'
-    'default-ttl': '60d'
+    'memory-size': '12G'
+    'default-ttl': '60D'
+    'high-water-memory-pct': '90'
+    'stop-writes-pct': '90'
+    'storage-engine device':
+      'device': '/dev/xvda'
+      'write-block-size': '128K'   
     'storage-engine memory': ''
