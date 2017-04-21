@@ -21,7 +21,7 @@ aerospike::config_net_hb:
   'timeout': 10
 aerospike::config_ns:
   'mobiadz':
-    'replication-factor': 2
+#    'replication-factor': 2
     'memory-size': '12G'
     'default-ttl': '60D'
     'high-water-memory-pct': '90'
