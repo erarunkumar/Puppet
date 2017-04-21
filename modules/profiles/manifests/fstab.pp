@@ -8,7 +8,7 @@ class profiles::fstab {
   mounts { 'Mount point for ext4':
     ensure  => present,
     source  => '/dev/xvdb',
-    dest    => '/mnt/data',
+    dest    => '/mnt',
     type    => 'xfs',
     opts    => 'nofail,defaults,noatime',
     require => Exec['filesystem']
