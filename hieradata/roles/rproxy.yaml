@@ -12,8 +12,8 @@ nginx::nginx_vhosts:
     resolver:
       - "17.0.0.2 valid=3s"
     raw_prepend:
-      - "set $upstream_backend \"http://frontend-asg.internal.adtech.com\";"
-      - "set $upstream_frontend \"http://backend-asg-deployer.internal.adtech.com\";"
+      - "set $upstream_backend \"http://backend-asg.internal.adtech.com\";"
+      - "set $upstream_frontend \"http://frontend-asg.internal.adtech.com\";"
   'mobiadz.mbttk.net':
     proxy: '$upstream_adserver'
     proxy_set_header:
