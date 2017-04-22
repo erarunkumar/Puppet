@@ -7,4 +7,6 @@ class profiles::base {
   include ulimit
   include packages
   include ulimit::rules
+  include zabbix::agent
+  include motd
 }

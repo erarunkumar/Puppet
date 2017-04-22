@@ -2,11 +2,22 @@
 selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
+zabbix::agent::server: zabbix-node-1.internal.adtech.com
 
 packages::enhancers:
   - wget
   - epel-release
   - vim
+  - telnet
+  - net-tools
+
+######################## Nexus #######################
+nexus::version: '3.0.0'
+nexus::revision: '03'
+nexus::download: 'http://download.sonatype.com/nexus/3'
+nexus::nexus_type: 'unix'
+nexus::nexus_work_dir_manage: false
+
 ntp::logfile: /var/log/ntp.log
 ntp::minpoll: 10
 ntp::maxpoll: 11
