@@ -1,0 +1,7 @@
+---
+jenkins::install_java: false
+java::oracles::java_details:
+  'jdk8':
+    ensure: 'present'
+    version: '8'
+    java_se: 'jdk'
