@@ -66,53 +66,17 @@ pytyp=record.pytyp,
   }
 end
 
-  local function mapper(rec)
-     local element = map()
-    element["dtme"] = rec["dtme"];
-    element["txnid"] = rec["txnid"]
-    element["tenantId"]=rec["tenantId"]
-    return element
-  end
+function check_usa(stream,ip)
+  local function filter_usa(record)
+    return record.usa ==usa
+end
 
-local function accumulate(currentList, nextElement)
-    local tenantId = nextElement["tenantId"]
-    info("current:"..tostring(currentList).." next:"..tostring(nextElement))
-      if currentList[tenantId] == nil then
-        currentList[tenantId] = list()
-      end
-      list.append(currentList[tenantId], nextElement)
-      return currentList
-  end
-
-
-    local function mymerge(a, b)
-      local l = list.merge(a, b)
-      local size = list.size(l)-1
-      local newlist= list.drop(l,size)
-    return newlist
-  end
-
-  local function reducer(this, that)
-    return map.merge(this, that, mymerge)
-  end
-
-function check_oid(stream,oid,afid,ip,isclkunq,itst)
-  local function filter_oid(record)
-    return record.oid ==oid
-  end
-  local function filter_afid(record)
-    return  record.afid==afid
-  end
  local function filter_ip(record)
     return  record.ip==ip
   end
-
-  local function filter_isUnique(record)
-    return record.isclkunq ==isclkunq
-  end
-  local function filter_itst(record)
-    return record.itst ==itst
-  end
-
-  return stream : filter(filter_oid):filter(filter_afid):filter(filter_ip):filter(filter_isUnique):filter(filter_itst):map(mapper):aggregate(map{}, accumulate):reduce(reducer)
+  return stream :filter(filter_ip):map(map_profile)
 end
+
+
+  
+
