@@ -45,10 +45,6 @@ node /^rproxy.internal.adtech.com$/ {
 node /^analytics-node-\d+\.internal$/ {
   include roles::grizzly
 }
-
-node /^jenkins.internal.adtech.com$/{
-  class { 'profiles::base': }->
-  class { 'profiles::java': }->
-  class { 'profiles::nexus': }->
-  class { 'profiles::jenkins': }
-}
+node /^jenkins.internal.adtech.com$/{ include roles::jenkins }
+node /^nexus.internal.adtech.com$/ { include roles::nexus }
+node /^zabbix.internal.adtech.com$/ { include roles::zabbix }

@@ -2,7 +2,7 @@
 selinux::mode: 'disabled'
 selinux::type: 'targeted'
 timezone::timezone: 'UTC'
-zabbix::agent::server: jenkins.internal.adtech.com
+zabbix::agent::server: zabbix.internal.adtech.com
 
 packages::enhancers:
   - wget
