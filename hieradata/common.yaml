@@ -16,22 +16,6 @@ nexus::version: '2.8.0'
 nexus::revision: '05'
 nexus::nexus_root: '/srv'
 
-jenkins::install_java: false
-
-######################## zabbix ########################
-apache::mpm_module: 'prefork'
-apache::default_vhost: false
-zabbix::zabbix_version: '3.2'
-zabbix::zabbix_url: "%{::ipaddress_eth0}"
-zabbix::zabbix_server: 'jenkins.internal.adtech.com'
-zabbix::javagateway: "%{::ipaddress_eth0}"
-zabbix::zabbix_timezone: 'UTC'
-zabbix::javagatewayport: 10052
-zabbix::startjavapollers: 16
-zabbix::database_type: 'mysql'
-zabbix::javagateway::listenip: "0.0.0.0"
-zabbix::javagateway::startpollers: 16
-
 ntp::logfile: /var/log/ntp.log
 ntp::minpoll: 10
 ntp::maxpoll: 11
