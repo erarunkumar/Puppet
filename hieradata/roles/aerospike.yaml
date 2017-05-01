@@ -24,9 +24,11 @@ aerospike::config_ns:
 #    'replication-factor': 2
     'memory-size': '12G'
     'default-ttl': '60D'
+    'high-water-disk-pct': '90'
     'high-water-memory-pct': '90'
     'stop-writes-pct': '90'
     'storage-engine device':
       - 'device /dev/xvdb'
       - 'write-block-size 128K'
+      - 'data-in-memory true'
 #    'storage-engine memory': ''
