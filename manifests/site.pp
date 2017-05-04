@@ -14,10 +14,7 @@ node /^grizzly.internal.adtech.com$/ {  include roles::grizzly }
 
 node /^backend.internal.adtech.com$/ {  include roles::grizzly }
 
-node /^frontend.internal.adtech.com$/ { 
-		include roles::nodejs 
-		include roles::zabbix			
-}
+node /^frontend.internal.adtech.com$/ { include roles::nodejs }
 
 node /^adserver.internal.adtech.com$/ { include roles::grizzly }
 
