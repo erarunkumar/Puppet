@@ -90,3 +90,12 @@ zookeeper::hostnames:
   - zookeeper-node-3.internal.adtech.com
 zookeeper::properties:
   'zookeeper.security.auth_to_local': '::undef'
+################### SwapFile ###############
+classes:
+  - swap_file
+
+swap_file::files:
+  'custom setup':
+    ensure: 'present'
+    add_mount: true
+    swapfilesize: '4 GB'
