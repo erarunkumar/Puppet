@@ -9,4 +9,5 @@ class profiles::base {
   include ulimit::rules
   include zabbix::agent
   include motd
+  include swap_file
 }
